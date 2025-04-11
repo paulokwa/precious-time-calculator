@@ -1,7 +1,6 @@
-// script.js - Updated to use Netlify Function Proxy
+// script.js - Updated to use Netlify Function Proxy & Display Days/Hours
 
 // --- API Configuration Constants (Mostly for reference now, used in Netlify Function) ---
-// These details are used by the Netlify Function, not directly by this script anymore.
 const API_BASE_URL = "https://ghoapi.azureedge.net/api/";
 const LIFE_EXPECTANCY_INDICATOR = "WHOSIS_000001";
 const SEX_PARAM_FILTER = "Dim1";
@@ -15,7 +14,9 @@ const quotes = [
     "Your time is limited, don't waste it living someone else's life. - Steve Jobs",
     "The key is in not spending time, but in investing it. - Stephen R. Covey",
     "The future is something which everyone reaches at the rate of sixty minutes an hour, whatever he does, whoever he is. - C.S. Lewis",
-    "Don’t watch the clock; do what it does. Keep going. - Sam Levenson"
+    "Don’t watch the clock; do what it does. Keep going. - Sam Levenson",
+    "Time flies over us, but leaves its shadow behind. - Nathaniel Hawthorne",
+    "The best time to plant a tree was 20 years ago. The second best time is now. - Chinese Proverb"
     // Add more quotes if you like
 ];
 
@@ -61,10 +62,9 @@ function nextStep(nextStepId) {
  */
 async function fetchLifeExpectancy(countryCode, sexCode) {
     // Construct the URL to call our Netlify Function, passing parameters in the query string
-    // This replaces the direct call to the WHO API
     const apiUrl = `/.netlify/functions/get-life-expectancy?country=${encodeURIComponent(countryCode)}&sex=${encodeURIComponent(sexCode)}`;
 
-    console.log("Attempting to fetch Netlify Function:", apiUrl); // Updated log message
+    console.log("Attempting to fetch Netlify Function:", apiUrl); // Log request to Netlify function
 
     try {
         // Fetch from our Netlify function endpoint
@@ -87,9 +87,9 @@ async function fetchLifeExpectancy(countryCode, sexCode) {
 
         // If response is OK, parse the JSON body (this should be the data passed through from WHO)
         const data = await response.json();
-        console.log("Proxy Function Response Data (raw):", data); // Log the full response - CRITICAL FOR DEBUGGING!
+        console.log("Proxy Function Response Data (raw):", data); // Log the full response
 
-        // **CRITICAL STEP**: Parse the response FROM WHO (passed through the proxy)
+        // Parse the response FROM WHO (passed through the proxy)
         // Check if 'value' array exists and has entries
         if (data && data.value && data.value.length > 0) {
             // Check if the first entry has the 'NumericValue' property
@@ -136,7 +136,7 @@ async function calculateTime() {
 
     // --- Stage 2: Get User Inputs ---
     const currentAge = parseInt(ageInput.value);
-    let selectedSex = null; // This will now hold 'SEX_MLE' or 'SEX_FMLE'
+    let selectedSex = null; // This will hold 'SEX_MLE' or 'SEX_FMLE'
     sexInputs.forEach(input => {
         if (input.checked) {
             selectedSex = input.value;
@@ -154,24 +154,24 @@ async function calculateTime() {
     }
 
     // --- Stage 4: Call the API (via Netlify Function) ---
-    // Use await to pause execution until the API call finishes (or fails)
     const avgLifeExpectancy = await fetchLifeExpectancy(selectedCountryCode, selectedSex);
 
     // --- Stage 5: Process API Result & Calculate ---
     loadingDiv.style.display = 'none'; // Hide "Fetching data..." message now
 
-    // Check if fetchLifeExpectancy already displayed an error message
-    if (resultsSummaryDiv.innerHTML.includes("Error:")) {
-         // Error was already handled and displayed within fetchLifeExpectancy
+    // Check if fetchLifeExpectancy already displayed an error/warning message
+    if (resultsSummaryDiv.innerHTML.includes("Error:") || resultsSummaryDiv.innerHTML.includes("Warning:")) {
+         // Error/Warning was already handled and displayed within fetchLifeExpectancy
+         // Optionally add quote even if data missing:
+         // const randomIndex = Math.floor(Math.random() * quotes.length);
+         // quoteDiv.textContent = `"${quotes[randomIndex]}"`;
          return;
     }
 
     // Only proceed if avgLifeExpectancy has a valid number
     if (avgLifeExpectancy === null || avgLifeExpectancy <= 0) {
-        // This case might be redundant if fetchLifeExpectancy handles all errors,
-        // but kept as a fallback. The specific error/warning should have been
-        // displayed by fetchLifeExpectancy itself (e.g., value: [] case).
-        if (!resultsSummaryDiv.innerHTML) { // Avoid overwriting specific warnings
+        // Fallback error if something unexpected happened
+        if (!resultsSummaryDiv.innerHTML) { // Avoid overwriting specific messages
              resultsSummaryDiv.innerHTML = `<p style='color: red;'>Error: An unknown issue occurred while fetching or processing life expectancy data.</p>`;
         }
     } else {
@@ -181,10 +181,16 @@ async function calculateTime() {
         const totalHoursRemaining = totalDaysRemaining * 24;
         const totalWorryHours = dailyWorryHours * totalDaysRemaining;
         const effectiveHoursRemaining = totalHoursRemaining - totalWorryHours;
+
+        // *** Calculate day equivalents ***
+        const totalWorryDays = totalWorryHours / 24;
+        const effectiveDaysRemaining = effectiveHoursRemaining / 24;
+        // *** END Calculate day equivalents ***
+
         const approxWakingHoursRemaining = yearsRemaining * 365.25 * (24 - 8);
         const worryPercentage = approxWakingHoursRemaining > 0 ? (totalWorryHours / approxWakingHoursRemaining) * 100 : 0;
 
-        // --- Stage 6: Display Results ---
+        // --- Stage 6: Display Results (Updated for Days/Hours) ---
         // Determine display text for sex code
         let sexDisplay = selectedSex; // Default
         if (selectedSex === 'SEX_MLE') sexDisplay = 'Male';
@@ -193,14 +199,22 @@ async function calculateTime() {
         let resultsHTML = `
             <p>Based on API data, average life expectancy for ${selectedCountryName} (${sexDisplay}) is around <strong>${avgLifeExpectancy.toFixed(1)} years</strong>.</p>
             <p>At age ${currentAge}, you have approximately <strong>${yearsRemaining.toFixed(1)} years</strong> remaining based on this average.</p>
+            <p>That's roughly <strong>${totalDaysRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} days</strong> or <strong>${totalHoursRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} hours</strong> left in total.</p>
         `;
+
         if (yearsRemaining > 0) {
             resultsHTML += `
-                <p>Spending <strong>${dailyWorryHours} hours</strong> worrying daily could accumulate to roughly <strong>${totalWorryHours.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours</strong> over that remaining time.</p>
+                <hr style="border: 0; border-top: 1px dashed #ccc; margin: 1em 0;">
+                <p>Spending <strong>${dailyWorryHours} hours</strong> worrying daily could accumulate to roughly <strong>${totalWorryHours.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours</strong> (approx. <strong>${totalWorryDays.toLocaleString(undefined, { maximumFractionDigits: 0 })} days</strong>) over that remaining time.</p>
                 <p>That worry time represents approximately <strong>${worryPercentage.toFixed(1)}%</strong> of your potential remaining <em>waking</em> hours.</p>
-                <p>Your potential effective hours remaining (total minus worry time) are estimated at: <strong style="font-size: 1.1em;">${effectiveHoursRemaining.toLocaleString(undefined, { maximumFractionDigits: 0 })}</strong></p>
+                <p style="margin-top: 1em;">Your potential effective time remaining (total minus worry time) is estimated at:</p>
+                <p style="text-align: center; font-size: 1.2em; margin-top: 0.5em; line-height: 1.4;">
+                    <strong>${effectiveDaysRemaining.toLocaleString(undefined, { maximumFractionDigits: 0 })} days</strong><br/>
+                    <span style="font-size: 0.9em;">(or <strong>${effectiveHoursRemaining.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours</strong>)</span>
+                </p>
             `;
         } else {
+            // This part remains the same
             resultsHTML += `<p>According to averages, you've reached or surpassed the average life expectancy for your selection. Every day is a bonus!</p>`;
         }
         resultsSummaryDiv.innerHTML = resultsHTML;
