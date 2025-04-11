@@ -1,0 +1,15 @@
+# netlify.toml
+
+[build]
+  # This assumes your index.html, style.css, script.js are in the root
+  # If they are in a subfolder (e.g., 'public'), change this.
+  publish = "."
+
+[functions]
+  # Tells Netlify where the source code for your functions is
+  directory = "netlify/functions/"
+
+# You might need to specify a Node.js version if you encounter issues
+# Check Netlify build logs if deployment fails. Default is usually fine.
+# [build.environment]
+#   NODE_VERSION = "18" # Example: Use Node.js v18
