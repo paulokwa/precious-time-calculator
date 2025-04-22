@@ -55,6 +55,66 @@ function nextStep(nextStepId) {
 }
 
 /**
+ * Fetches the country list from our Netlify proxy function and populates the dropdown.
+ */
+async function populateCountryDropdown() {
+    const countrySelect = document.getElementById('country');
+    // Keep the default placeholder option
+    const defaultOptionText = "-- Select Country --";
+    countrySelect.innerHTML = `<option value="" disabled selected>${defaultOptionText}</option>`; // Reset but keep placeholder
+
+    const apiUrl = '/.netlify/functions/get-country-list'; // URL of our NEW Netlify function
+
+    console.log("Attempting to fetch country list via Netlify function:", apiUrl);
+
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            // Handle error from OUR function
+            const errorData = await response.json();
+            console.error("Error fetching country list from proxy:", response.status, errorData);
+            // Optionally display an error to the user in the dropdown area
+            countrySelect.innerHTML = `<option value="" disabled selected>Error loading countries</option>`;
+            return; // Stop processing
+        }
+
+        const data = await response.json(); // This should contain the { value: [...] } structure from WHO
+
+        if (data && data.value && Array.isArray(data.value)) {
+            console.log("Received country list data:", data.value);
+
+            // Sort countries alphabetically by Title for better UX
+            data.value.sort((a, b) => {
+                if (a.Title < b.Title) return -1;
+                if (a.Title > b.Title) return 1;
+                return 0;
+            });
+
+            // Populate the dropdown
+            data.value.forEach(country => {
+                // Check if Code and Title exist
+                if (country.Code && country.Title) {
+                     const option = document.createElement('option');
+                     option.value = country.Code; // Use the 3-letter code (e.g., 'CAN')
+                     option.textContent = country.Title; // Display the full name (e.g., 'Canada')
+                     countrySelect.appendChild(option);
+                } else {
+                    console.warn("Skipping country entry with missing Code or Title:", country);
+                }
+            });
+            console.log("Country dropdown populated.");
+        } else {
+             console.error("Unexpected data structure received for country list:", data);
+             countrySelect.innerHTML = `<option value="" disabled selected>Error: Invalid data</option>`;
+        }
+
+    } catch (error) {
+        console.error("Error fetching or processing country list:", error);
+         countrySelect.innerHTML = `<option value="" disabled selected>Error loading countries</option>`;
+    }
+}
+
+/**
  * Fetches Life Expectancy data VIA THE NETLIFY PROXY FUNCTION.
  * @param {string} countryCode - The country code (e.g., 'CAN', 'USA').
  * @param {string} sexCode - The sex code (e.g., 'SEX_MLE', 'SEX_FMLE').
@@ -234,4 +294,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Set the initial text for the worry slider output
     worryOutput.textContent = `${worrySlider.value} hour${worrySlider.value == 1 ? '' : 's'}`;
+
+        // *** ADD THIS LINE ***
+        populateCountryDropdown(); // Fetch and populate countries when the page loads
+        // *** END ADD ***
+
 });
