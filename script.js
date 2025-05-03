@@ -1,4 +1,4 @@
-// script.js - Added WHO attribution and source link
+// script.js - Added display for Years, Days, Hours
 
 // --- API Configuration Constants ---
 const API_BASE_URL = "https://ghoapi.azureedge.net/api/";
@@ -190,7 +190,6 @@ async function calculateTime() {
     loadingDiv.style.display = 'block';
     resultsSummaryDiv.innerHTML = '';
     quoteDiv.textContent = '';
-    // Hide result action buttons during loading
     if(refreshQuoteBtn) refreshQuoteBtn.style.display = 'none';
     if(restartBtn) restartBtn.style.display = 'none';
     nextStep('step-results');
@@ -211,9 +210,8 @@ async function calculateTime() {
     if (isNaN(currentAge) || currentAge <= 0 || !selectedSex || !selectedCountryCode || isNaN(dailyWorryHours)) {
         resultsSummaryDiv.innerHTML = "<p style='color: red;'>Error: Please go back and ensure Age, Sex, Country, and Worry Time are all set correctly.</p>";
         loadingDiv.style.display = 'none';
-        // Show restart button even on validation error
         if(restartBtn) restartBtn.style.display = 'inline-block';
-        if(refreshQuoteBtn) refreshQuoteBtn.style.display = 'none'; // Keep refresh hidden
+        if(refreshQuoteBtn) refreshQuoteBtn.style.display = 'none';
         return;
     }
 
@@ -223,14 +221,11 @@ async function calculateTime() {
     // --- Stage 5: Process API Result & Calculate ---
     loadingDiv.style.display = 'none';
 
-    // Show result action buttons only after loading is done
     if(refreshQuoteBtn) refreshQuoteBtn.style.display = 'inline-block';
     if(restartBtn) restartBtn.style.display = 'inline-block';
 
 
     if (resultsSummaryDiv.innerHTML.includes("Error:") || resultsSummaryDiv.innerHTML.includes("Warning:")) {
-         // Error/Warning was already handled and displayed within fetchLifeExpectancy
-         // Keep buttons visible, but hide refresh quote if no valid data
          if(refreshQuoteBtn) refreshQuoteBtn.style.display = 'none';
          return;
     }
@@ -239,10 +234,9 @@ async function calculateTime() {
         if (!resultsSummaryDiv.innerHTML) {
              resultsSummaryDiv.innerHTML = `<p style='color: red;'>Error: An unknown issue occurred while fetching or processing life expectancy data.</p>`;
         }
-        // Keep buttons visible, but hide refresh quote if no valid data
         if(refreshQuoteBtn) refreshQuoteBtn.style.display = 'none';
     } else {
-        // Calculation successful! Proceed with calculations.
+        // Calculation successful!
         const yearsRemaining = Math.max(0, avgLifeExpectancy - currentAge);
         const totalDaysRemaining = yearsRemaining * 365.25;
         const totalHoursRemaining = totalDaysRemaining * 24;
@@ -250,15 +244,19 @@ async function calculateTime() {
         const effectiveHoursRemaining = totalHoursRemaining - totalWorryHours;
         const totalWorryDays = totalWorryHours / 24;
         const effectiveDaysRemaining = effectiveHoursRemaining / 24;
+        // *** NEW: Calculate year equivalents ***
+        const totalWorryYears = totalWorryDays / 365.25;
+        const effectiveYearsRemaining = effectiveDaysRemaining / 365.25;
+        // *** END NEW ***
         const approxWakingHoursRemaining = yearsRemaining * 365.25 * (24 - 8);
         const worryPercentage = approxWakingHoursRemaining > 0 ? (totalWorryHours / approxWakingHoursRemaining) * 100 : 0;
 
-        // --- Stage 6: Display Results (Updated Attribution) ---
+        // --- Stage 6: Display Results (Updated Attribution & Years) ---
         let sexDisplay = selectedSex;
         if (selectedSex === 'SEX_MLE') sexDisplay = 'Male';
         if (selectedSex === 'SEX_FMLE') sexDisplay = 'Female';
 
-        // *** MODIFIED this line ***
+        // *** MODIFIED resultsHTML section ***
         let resultsHTML = `
             <p>Based on info from the World Health Organisation (WHO), average life expectancy for ${selectedCountryName} (${sexDisplay}) is around <strong>${avgLifeExpectancy.toFixed(1)} years</strong>.</p>
             <p>At age ${currentAge}, you have approximately <strong>${yearsRemaining.toFixed(1)} years</strong> remaining based on this average.</p>
@@ -267,25 +265,24 @@ async function calculateTime() {
         if (yearsRemaining > 0) {
             resultsHTML += `
                 <hr style="border: 0; border-top: 1px dashed #ccc; margin: 1em 0;">
-                <p>Spending <strong>${dailyWorryHours} hours</strong> worrying daily could accumulate to roughly <strong>${totalWorryHours.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours</strong> (approx. <strong>${totalWorryDays.toLocaleString(undefined, { maximumFractionDigits: 0 })} days</strong>) over that remaining time.</p>
+                <p>Spending <strong>${dailyWorryHours} hours</strong> worrying daily could accumulate to roughly <strong>${totalWorryHours.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours</strong> (approx. <strong>${totalWorryDays.toLocaleString(undefined, { maximumFractionDigits: 0 })} days</strong> or <strong>${totalWorryYears.toFixed(1)} years</strong>) over that remaining time.</p>
                 <p>That worry time represents approximately <strong>${worryPercentage.toFixed(1)}%</strong> of your potential remaining <em>waking</em> hours.</p>
                 <p style="margin-top: 1em;">Your potential effective time remaining (total minus worry time) is estimated at:</p>
                 <p style="text-align: center; font-size: 1.2em; margin-top: 0.5em; line-height: 1.4;">
-                    <strong>${effectiveDaysRemaining.toLocaleString(undefined, { maximumFractionDigits: 0 })} days</strong><br/>
-                    <span style="font-size: 0.9em;">(or <strong>${effectiveHoursRemaining.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours</strong>)</span>
+                    <strong>${effectiveYearsRemaining.toFixed(1)} years</strong><br/>
+                    <span style="font-size: 0.9em;">(or <strong>${effectiveDaysRemaining.toLocaleString(undefined, { maximumFractionDigits: 0 })} days</strong> / <strong>${effectiveHoursRemaining.toLocaleString(undefined, { maximumFractionDigits: 0 })} hours</strong>)</span>
                 </p>
             `;
         } else {
             resultsHTML += `<p>According to averages, you've reached or surpassed the average life expectancy for your selection. Every day is a bonus!</p>`;
         }
+        // *** END MODIFIED resultsHTML section ***
 
-        // *** ADDED source link ***
         resultsHTML += `
             <p style="font-size: 0.8em; text-align: right; color: #718096; margin-top: 1.5em;">
                 Source: <a href="https://apps.who.int/gho/data/view.main.SDG2016LEXv?lang=en" target="_blank" rel="noopener noreferrer" style="color: #4a5568;">WHO GHO Life Expectancy Data</a>
             </p>
         `;
-        // *** END ADDED source link ***
 
         resultsSummaryDiv.innerHTML = resultsHTML;
 
