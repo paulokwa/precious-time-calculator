@@ -1,4 +1,4 @@
-/* style.css - Complete file fixing cut-off text issue */
+/* style.css - Complete file with element refinements */
 
 /* Basic body and layout styles */
 body {
@@ -7,7 +7,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #eef2f3, #e0eafc);
+    background: linear-gradient(to bottom, #f0f4f8, #d9e2ec); /* Slightly adjusted gradient */
     color: #333;
     display: flex;
     flex-direction: column;
@@ -40,68 +40,77 @@ footer {
     font-size: 0.9em;
 }
 
-/* Main content area styling - Reverted positioning */
+/* Main content area styling - Refined */
 main {
     width: 90%;
     max-width: 600px;
-    margin: 2.5rem auto;
+    margin: 3rem auto; /* Slightly more top/bottom margin */
     background: #ffffff;
-    padding: 2.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    /* overflow: hidden; */ /* Can remove or keep, less critical now */
-    position: relative; /* Keep just in case needed for future elements */
-    /* min-height removed - height will now adjust to content */
+    padding: 2.5rem 3rem; /* More horizontal padding */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12); /* Softer, slightly larger shadow */
+    border-radius: 10px; /* More rounded */
+    border: 1px solid #e2e8f0; /* Subtle border */
+    position: relative;
 }
 
 /* Headings */
 h2 {
-    margin-bottom: 1.5rem;
-    color: #2d3748;
+    margin-top: 0; /* Remove default top margin if it's the first element */
+    margin-bottom: 2rem; /* Increased space */
+    color: #1a202c; /* Darker */
     font-weight: 600;
     text-align: center;
+    font-size: 1.6em; /* Larger step titles */
 }
 
-/* Form element styling */
+/* Form element styling - Refined */
 label {
     display: block;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.7rem; /* More space */
     font-weight: 600;
     color: #4a5568;
+    font-size: 0.95em; /* Slightly smaller label */
 }
 
 input[type="number"], select, .radio-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem; /* More space */
 }
 
 input[type="number"], select {
     width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #cbd5e0;
+    padding: 0.9rem; /* More padding */
+    border: 1px solid #d1dce5; /* Adjusted border color */
     border-radius: 6px;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     color: #2d3748;
+    background-color: #f8fafc; /* Very light input background */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Smooth focus transition */
 }
 input[type="number"]:focus, select:focus {
      border-color: #5cb85c;
      outline: none;
-     box-shadow: 0 0 0 2px rgba(92, 184, 92, 0.2);
+     box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.15); /* Adjusted focus shadow */
+     background-color: #fff;
 }
 
 
 input[type="radio"] {
     margin-right: 0.5rem;
     accent-color: #5cb85c;
+    transform: scale(1.1); /* Slightly larger radio */
+    vertical-align: middle;
 }
 
 .radio-group label {
-    display: inline-block;
+    display: inline-flex; /* Align radio and text better */
+    align-items: center;
     margin-right: 1.5rem;
     font-weight: 400;
     color: #4a5568;
     cursor: pointer;
+    font-size: 1rem; /* Ensure label text size matches inputs */
 }
 
 input[type="range"] {
@@ -112,71 +121,79 @@ input[type="range"] {
     accent-color: #5cb85c;
 }
 
+/* Button Styling - Refined */
 button {
     display: block;
     width: 100%;
-    background: #5cb85c;
+    /* Subtle gradient background */
+    background-image: linear-gradient(to bottom, #63c763, #51a851);
     color: #fff;
     padding: 0.9rem 1.5rem;
-    border: none;
-    border-radius: 6px;
+    border: none; /* Remove default border */
+    border-bottom: 2px solid #418c41; /* Add subtle depth */
+    border-radius: 8px; /* Match main container rounding */
     cursor: pointer;
     font-size: 1.1rem;
     font-weight: 600;
-    margin-top: 1.5rem;
-    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 2rem; /* More space */
+    transition: background-image 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
     font-family: 'Poppins', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1); /* Subtle text shadow */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Button shadow */
 }
 
 button:hover {
-    background: #4cae4c;
+    background-image: linear-gradient(to bottom, #6ad06a, #5cb85c); /* Lighter gradient on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 button:active {
-    transform: scale(0.98);
+    transform: scale(0.98) translateY(1px); /* Press effect */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border-bottom-width: 1px;
 }
 
-/* --- Reverted Step Transitions (Simple Fade) --- */
+/* --- Step Transitions (Simple Fade) --- */
 .step {
-    display: none; /* Hide inactive steps */
+    display: none;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out; /* Only transition opacity */
-    /* Removed absolute positioning, top, left, width, transform */
+    transition: opacity 0.5s ease-in-out;
 }
 
 .step.active {
-    display: block; /* Show active step */
-    opacity: 1; /* Fade it in */
-    /* Removed transform */
+    display: block;
+    opacity: 1;
 }
 
 
-/* --- Results & Quote Styling --- */
+/* --- Results & Quote Styling - Refined --- */
 #results-summary {
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background-color: #f0fff4;
-    border-left: 5px solid #68d391;
-    border-radius: 4px;
+    margin-top: 2rem; /* More space */
+    padding: 1.8rem; /* More padding */
+    background-color: #f0fdf4; /* Even lighter green */
+    border: 1px solid #bbf7d0; /* Light green border */
+    border-left: 5px solid #4ade80; /* Brighter green left border */
+    border-radius: 8px; /* Match main container */
     line-height: 1.7;
-    color: #2f855a;
+    color: #166534; /* Darker green text */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inner shadow */
 }
 
 #results-summary p {
-    margin: 0.6rem 0;
+    margin: 0.7rem 0; /* Slightly more space */
 }
 #results-summary strong {
     font-weight: 600;
-    color: #2c7a7b;
+    color: #047857; /* Dark teal */
 }
 
 
 #motivational-quote {
-    margin-top: 2rem;
+    margin-top: 2.5rem; /* More space */
     padding: 1.5rem;
-    border-top: 1px dashed #cbd5e0;
+    border-top: 1px dashed #d1dce5; /* Adjusted dashed line */
     font-style: italic;
     text-align: center;
-    color: #718096;
+    color: #64748b; /* Slightly darker grey */
     font-size: 1.1em;
     line-height: 1.6;
 }
@@ -186,23 +203,20 @@ button:active {
     min-width: 70px;
     font-weight: 600;
     vertical-align: middle;
-    color: #2d3748;
-    background-color: #edf2f7;
-    padding: 0.2em 0.5em;
-    border-radius: 4px;
+    color: #1e293b; /* Darker text */
+    background-color: #e2e8f0; /* Slightly darker grey bg */
+    padding: 0.3em 0.6em;
+    border-radius: 6px;
     margin-left: 5px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
 }
 
 /* --- Loading Spinner Styles --- */
 #results-loading {
     text-align: center;
     padding: 3rem 1rem;
-    color: #a0aec0;
+    color: #94a3b8; /* Adjusted grey */
     font-style: italic;
-    /* display: flex; */ /* Can remove flex here if simple text-align is enough */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* justify-content: center; */
     min-height: 200px;
 }
 
@@ -210,11 +224,10 @@ button:active {
     width: 45px;
     height: 45px;
     border: 5px solid #e2e8f0;
-    border-top: 5px solid #68d391;
+    border-top: 5px solid #68d391; /* Keep spinner color */
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: 0 auto 1.2rem auto; /* Center spinner horizontally, add bottom margin */
-    /* Removed margin-bottom only */
+    margin: 0 auto 1.2rem auto;
 }
 
 @keyframes spin {
