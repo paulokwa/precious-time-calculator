@@ -1,4 +1,4 @@
-/* style.css - Complete file with element refinements */
+/* style.css - Attempting to fix icon visibility on live site */
 
 /* Basic body and layout styles */
 body {
@@ -7,7 +7,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #f0f4f8, #d9e2ec); /* Slightly adjusted gradient */
+    background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
     color: #333;
     display: flex;
     flex-direction: column;
@@ -40,58 +40,73 @@ footer {
     font-size: 0.9em;
 }
 
-/* Main content area styling - Refined */
+/* Main content area styling */
 main {
     width: 90%;
     max-width: 600px;
-    margin: 3rem auto; /* Slightly more top/bottom margin */
+    margin: 3rem auto;
     background: #ffffff;
-    padding: 2.5rem 3rem; /* More horizontal padding */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12); /* Softer, slightly larger shadow */
-    border-radius: 10px; /* More rounded */
-    border: 1px solid #e2e8f0; /* Subtle border */
+    padding: 2.5rem 3rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
     position: relative;
 }
 
 /* Headings */
 h2 {
-    margin-top: 0; /* Remove default top margin if it's the first element */
-    margin-bottom: 2rem; /* Increased space */
-    color: #1a202c; /* Darker */
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: #1a202c;
     font-weight: 600;
     text-align: center;
-    font-size: 1.6em; /* Larger step titles */
+    font-size: 1.6em;
 }
 
-/* Form element styling - Refined */
+/* Form element styling */
 label {
-    display: block;
-    margin-bottom: 0.7rem; /* More space */
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.7rem;
     font-weight: 600;
     color: #4a5568;
-    font-size: 0.95em; /* Slightly smaller label */
+    font-size: 0.95em;
 }
 
+/* Icon Styling - Targeting SVG - Refined for visibility */
+.label-icon {
+    display: inline-block; /* Explicitly set display */
+    width: 1.2em; /* Slightly larger size */
+    height: 1.2em;
+    margin-right: 0.6em; /* More space */
+    stroke: #4a5568; /* Darker color for better contrast */
+    stroke-width: 2;
+    fill: none;
+    flex-shrink: 0;
+    vertical-align: -0.2em; /* Fine-tune vertical alignment */
+}
+
+
 input[type="number"], select, .radio-group {
-    margin-bottom: 1.5rem; /* More space */
+    margin-bottom: 1.5rem;
 }
 
 input[type="number"], select {
     width: 100%;
-    padding: 0.9rem; /* More padding */
-    border: 1px solid #d1dce5; /* Adjusted border color */
+    padding: 0.9rem;
+    border: 1px solid #d1dce5;
     border-radius: 6px;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     color: #2d3748;
-    background-color: #f8fafc; /* Very light input background */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Smooth focus transition */
+    background-color: #f8fafc;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 input[type="number"]:focus, select:focus {
      border-color: #5cb85c;
      outline: none;
-     box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.15); /* Adjusted focus shadow */
+     box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.15);
      background-color: #fff;
 }
 
@@ -99,19 +114,24 @@ input[type="number"]:focus, select:focus {
 input[type="radio"] {
     margin-right: 0.5rem;
     accent-color: #5cb85c;
-    transform: scale(1.1); /* Slightly larger radio */
+    transform: scale(1.1);
     vertical-align: middle;
 }
 
 .radio-group label {
-    display: inline-flex; /* Align radio and text better */
+    display: inline-flex;
     align-items: center;
     margin-right: 1.5rem;
     font-weight: 400;
     color: #4a5568;
     cursor: pointer;
-    font-size: 1rem; /* Ensure label text size matches inputs */
+    font-size: 1rem;
 }
+/* Remove icon styling from radio group labels */
+.radio-group label .label-icon {
+    display: none;
+}
+
 
 input[type="range"] {
     width: 80%;
@@ -121,81 +141,84 @@ input[type="range"] {
     accent-color: #5cb85c;
 }
 
-/* Button Styling - Refined */
+/* Button Styling */
 button {
     display: block;
     width: 100%;
-    /* Subtle gradient background */
     background-image: linear-gradient(to bottom, #63c763, #51a851);
     color: #fff;
     padding: 0.9rem 1.5rem;
-    border: none; /* Remove default border */
-    border-bottom: 2px solid #418c41; /* Add subtle depth */
-    border-radius: 8px; /* Match main container rounding */
+    border: none;
+    border-bottom: 2px solid #418c41;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1.1rem;
     font-weight: 600;
-    margin-top: 2rem; /* More space */
+    margin-top: 2rem;
     transition: background-image 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
     font-family: 'Poppins', sans-serif;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.1); /* Subtle text shadow */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Button shadow */
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 button:hover {
-    background-image: linear-gradient(to bottom, #6ad06a, #5cb85c); /* Lighter gradient on hover */
+    background-image: linear-gradient(to bottom, #6ad06a, #5cb85c);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 button:active {
-    transform: scale(0.98) translateY(1px); /* Press effect */
+    transform: scale(0.98) translateY(1px);
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     border-bottom-width: 1px;
 }
 
-/* --- Step Transitions (Simple Fade) --- */
+/* --- Step Transitions (Max-Height + Fade) --- */
 .step {
-    display: none;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease-out, max-height 0.6s ease-in-out;
+    margin-bottom: 0;
 }
 
 .step.active {
-    display: block;
     opacity: 1;
+    max-height: 1000px; /* Adjust if needed */
+    margin-bottom: 1rem;
 }
 
 
-/* --- Results & Quote Styling - Refined --- */
+/* --- Results & Quote Styling --- */
 #results-summary {
-    margin-top: 2rem; /* More space */
-    padding: 1.8rem; /* More padding */
-    background-color: #f0fdf4; /* Even lighter green */
-    border: 1px solid #bbf7d0; /* Light green border */
-    border-left: 5px solid #4ade80; /* Brighter green left border */
-    border-radius: 8px; /* Match main container */
+    margin-top: 2rem;
+    padding: 1.8rem;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 5px solid #4ade80;
+    border-radius: 8px;
     line-height: 1.7;
-    color: #166534; /* Darker green text */
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inner shadow */
+    color: #166534;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 #results-summary p {
-    margin: 0.7rem 0; /* Slightly more space */
+    margin: 0.7rem 0;
 }
 #results-summary strong {
     font-weight: 600;
-    color: #047857; /* Dark teal */
+    color: #047857;
 }
 
 
 #motivational-quote {
-    margin-top: 2.5rem; /* More space */
+    margin-top: 2.5rem;
     padding: 1.5rem;
-    border-top: 1px dashed #d1dce5; /* Adjusted dashed line */
+    border-top: 1px dashed #d1dce5;
     font-style: italic;
     text-align: center;
-    color: #64748b; /* Slightly darker grey */
+    color: #64748b;
     font-size: 1.1em;
     line-height: 1.6;
+    min-height: 3em;
 }
 
 #worry-output {
@@ -203,8 +226,8 @@ button:active {
     min-width: 70px;
     font-weight: 600;
     vertical-align: middle;
-    color: #1e293b; /* Darker text */
-    background-color: #e2e8f0; /* Slightly darker grey bg */
+    color: #1e293b;
+    background-color: #e2e8f0;
     padding: 0.3em 0.6em;
     border-radius: 6px;
     margin-left: 5px;
@@ -215,7 +238,7 @@ button:active {
 #results-loading {
     text-align: center;
     padding: 3rem 1rem;
-    color: #94a3b8; /* Adjusted grey */
+    color: #94a3b8;
     font-style: italic;
     min-height: 200px;
 }
@@ -224,7 +247,7 @@ button:active {
     width: 45px;
     height: 45px;
     border: 5px solid #e2e8f0;
-    border-top: 5px solid #68d391; /* Keep spinner color */
+    border-top: 5px solid #68d391;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 1.2rem auto;
@@ -233,5 +256,59 @@ button:active {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* --- Styles for Result Action Buttons --- */
+.results-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.secondary-btn {
+    width: auto;
+    background-image: linear-gradient(to bottom, #a0aec0, #718096);
+    border: none;
+    border-bottom: 2px solid #4a5568;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+    margin-top: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    /* Inherit styles from base button */
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-image 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.secondary-btn:hover {
+    background-image: linear-gradient(to bottom, #b0c4de, #8190a6);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.secondary-btn:active {
+    transform: scale(0.98) translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border-bottom-width: 1px;
+}
+
+/* Style for icons inside buttons - Refined */
+.button-icon {
+    display: inline-block; /* Ensure display */
+    width: 1.1em; /* Control size */
+    height: 1.1em;
+    stroke: currentColor; /* Use button text color (white) */
+    stroke-width: 2; /* Adjusted stroke */
+    fill: none;
+    vertical-align: -0.15em; /* Adjust vertical alignment */
 }
 
