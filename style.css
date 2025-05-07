@@ -1,6 +1,11 @@
-/* style.css - Attempting to fix icon visibility on live site */
+/* style.css - Added body overflow-x fix and box-sizing */
 
-/* Basic body and layout styles */
+/* Universal Box Sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Basic body and layout styles - Added overflow-x */
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
@@ -13,6 +18,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     align-items: center;
+    overflow-x: hidden; /* Prevent horizontal scrolling/whitespace */
 }
 
 header {
@@ -42,11 +48,11 @@ footer {
 
 /* Main content area styling */
 main {
-    width: 90%;
-    max-width: 600px;
+    width: 90%; /* Default width */
+    max-width: 600px; /* Max width on larger screens */
     margin: 3rem auto;
     background: #ffffff;
-    padding: 2.5rem 3rem;
+    padding: 2.5rem 3rem; /* Default padding (for larger screens) */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     border: 1px solid #e2e8f0;
@@ -73,17 +79,17 @@ label {
     font-size: 0.95em;
 }
 
-/* Icon Styling - Targeting SVG - Refined for visibility */
+/* Icon Styling - Targeting SVG */
 .label-icon {
-    display: inline-block; /* Explicitly set display */
-    width: 1.2em; /* Slightly larger size */
+    display: inline-block;
+    width: 1.2em;
     height: 1.2em;
-    margin-right: 0.6em; /* More space */
-    stroke: #4a5568; /* Darker color for better contrast */
+    margin-right: 0.6em;
+    stroke: #4a5568;
     stroke-width: 2;
     fill: none;
     flex-shrink: 0;
-    vertical-align: -0.2em; /* Fine-tune vertical alignment */
+    vertical-align: -0.2em;
 }
 
 
@@ -96,7 +102,7 @@ input[type="number"], select {
     padding: 0.9rem;
     border: 1px solid #d1dce5;
     border-radius: 6px;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */ /* Handled by universal rule now */
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     color: #2d3748;
@@ -266,6 +272,7 @@ button:active {
     display: flex;
     justify-content: space-around;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .secondary-btn {
@@ -280,7 +287,6 @@ button:active {
     display: inline-flex;
     align-items: center;
     gap: 0.4em;
-    /* Inherit styles from base button */
     color: #fff;
     border-radius: 8px;
     cursor: pointer;
@@ -301,14 +307,82 @@ button:active {
     border-bottom-width: 1px;
 }
 
-/* Style for icons inside buttons - Refined */
+/* Style for icons inside buttons */
 .button-icon {
-    display: inline-block; /* Ensure display */
-    width: 1.1em; /* Control size */
+    display: inline-block;
+    width: 1.1em;
     height: 1.1em;
-    stroke: currentColor; /* Use button text color (white) */
-    stroke-width: 2; /* Adjusted stroke */
+    stroke: currentColor;
+    stroke-width: 2;
     fill: none;
-    vertical-align: -0.15em; /* Adjust vertical alignment */
+    vertical-align: -0.15em;
 }
+
+
+/* --- Media Query for Mobile Responsiveness --- */
+@media (max-width: 640px) {
+
+    body {
+        font-size: 95%;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    main {
+        width: 95%;
+        margin: 1.5rem auto;
+        padding: 1.5rem 1rem;
+        border-radius: 8px;
+    }
+
+    h2 {
+        font-size: 1.4em;
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        font-size: 0.9em;
+    }
+
+    input[type="number"], select {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    button { /* Main action buttons */
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .results-actions {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        gap: 0.5rem;
+    }
+
+    .secondary-btn { /* Result action buttons */
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+
+    #results-summary {
+        padding: 1rem;
+        line-height: 1.6;
+    }
+
+    #motivational-quote {
+        font-size: 1em;
+        padding: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    #worry-output {
+        font-size: 0.9em;
+    }
+
+}
+/* --- END Media Query --- */
 
