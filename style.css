@@ -57,6 +57,7 @@ main {
     border-radius: 10px;
     border: 1px solid #e2e8f0;
     position: relative;
+    flex: 1 0 auto;
 }
 
 /* Headings */
@@ -335,9 +336,13 @@ button:active {
     }
 
     main {
-        width: 95%;
-        margin: 1rem auto;
-        padding: 1.5rem;
+        width: 98%;
+        margin: 0.5rem auto 0.5rem auto;
+        padding: 0.7rem 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 70vh;
     }
 
     h2 {
@@ -362,19 +367,22 @@ button:active {
     }
 
     .results-actions {
-        display: flex;
-        gap: 0.8rem;
-        margin-top: 1.2rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+        padding-bottom: 1rem;
+        margin-bottom: 0.7rem;
     }
 
     .secondary-btn {
-        padding: 0.7rem 1rem;
-        font-size: 0.9rem;
+        width: 100%;
+        min-width: 0;
+        margin: 0;
     }
 
     #results-summary {
-        margin-top: 1.2rem;
-        padding: 1.2rem;
+        margin-top: 0.7rem;
+        padding: 0.7rem;
     }
 
     #results-summary p {
@@ -382,9 +390,9 @@ button:active {
     }
 
     #motivational-quote {
-        margin-top: 1.5rem;
-        padding: 1rem;
-        font-size: 1em;
+        margin-top: 0.7rem;
+        padding: 0.5rem;
+        font-size: 0.95em;
     }
 
     #worry-output {
@@ -395,6 +403,7 @@ button:active {
     footer {
         padding: 0.8rem 0;
         font-size: 0.8em;
+        margin-top: 0;
     }
 
     /* Make radio group more compact */
@@ -411,6 +420,34 @@ button:active {
     input[type="range"] {
         width: 70%;
     }
+
+    #refresh-quote-btn,
+    #restart-btn {
+        display: block !important;
+        width: 100%;
+        min-width: 0;
+        margin: 0.5rem 0 0 0;
+    }
+
+    main, .step, .step.active, #step-results {
+        margin-bottom: 0.5rem;
+        min-height: 0;
+    }
+
+    .step.active {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    /* Don't center the results step, let it flow naturally */
+    #step-results.step.active {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
 /* --- END Media Query --- */
+
+html, body {
+  height: 100%;
+}
 
