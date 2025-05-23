@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Precious Time (API Version)</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,10 +14,7 @@
     <main>
         <section id="step-age" class="step active">
             <h2>Step 1: How old are you?</h2>
-            <label for="age">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="label-icon lucide lucide-calendar-days"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-                Your current age:
-            </label>
+            <label for="age">Your current age:</label>
             <input type="number" id="age" name="age" min="1" max="120" required>
             <button onclick="nextStep('step-sex')">Next</button>
         </section>
@@ -30,18 +22,12 @@
         <section id="step-sex" class="step">
             <h2>Step 2: What is your biological sex?</h2>
             <p>(Needed for average life expectancy data)</p>
-             <label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="label-icon lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                Select Sex:
-             </label>
             <div class="radio-group">
                 <label>
-                    <input type="radio" id="sex-male" name="sex" value="SEX_MLE" required>
-                    Male
+                    <input type="radio" id="sex-male" name="sex" value="SEX_MLE" required> Male
                 </label>
                 <label>
-                    <input type="radio" id="sex-female" name="sex" value="SEX_FMLE" required>
-                    Female
+                    <input type="radio" id="sex-female" name="sex" value="SEX_FMLE" required> Female
                 </label>
             </div>
             <button onclick="nextStep('step-country')">Next</button>
@@ -49,49 +35,32 @@
 
         <section id="step-country" class="step">
             <h2>Step 3: Where do you live?</h2>
-            <label for="country">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="label-icon lucide lucide-globe-2"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3v0a2 2 0 0 1 2 2v0c0 1.1.9 2 2 2v0a2 2 0 0 0 2-2v0c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2v0a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                Select your country:
-            </label>
+            <label for="country">Select your country:</label>
             <select id="country" name="country" required>
                 <option value="" disabled selected>-- Select Country --</option>
-                </select>
+            </select>
             <button onclick="nextStep('step-worry')">Next</button>
         </section>
 
         <section id="step-worry" class="step">
             <h2>Step 4: Daily Worry Time</h2>
-            <label for="worry-hours">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="label-icon lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                On average, how many hours per day do you spend worrying about things you can't control?
-            </label>
+            <label for="worry-hours">On average, how many hours per day do you spend worrying about things you can't control?</label>
             <input type="range" id="worry-hours" name="worry-hours" min="0" max="12" step="0.5" value="1">
             <span id="worry-output">1 hour</span>
-            <button onclick="calculateTime()">Calculate My Time</button>
-        </section>
+            <button onclick="calculateTime()">Calculate My Time</button> </section>
 
         <section id="step-results" class="step">
             <h2>Your Time Breakdown</h2>
-            <div id="results-loading" style="display: none;">
-                <div class="loading-spinner"></div>
-                Fetching data...
-            </div>
+            <div id="results-loading" style="display: none;">Fetching data...</div>
             <div id="results-summary">
-                </div>
-            <div id="motivational-quote">
-                </div>
-
-            <div class="results-actions">
-                <button id="refresh-quote-btn" class="secondary-btn">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M3 2c3.2 0 6.4.7 9.3 2.1"/><path d="M21 12a9 9 0 1 1-6.7-8.7"/><path d="M21 2v6h-6"/></svg>
-                    Another Quote
-                </button>
-                <button id="restart-btn" class="secondary-btn">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
-                    Start Over
-                </button>
             </div>
-            </section>
+            <div id="motivational-quote">
+            </div>
+            <div class="result-actions">
+                <button id="reset-button" onclick="resetCalculator()">Start Over</button>
+                <button onclick="showNewQuote()">New Quote</button>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -99,6 +68,5 @@
     </footer>
 
     <script src="script.js" defer></script>
-
-    </body>
+</body>
 </html>

@@ -1,453 +1,274 @@
-/* style.css - Added body overflow-x fix and box-sizing */
-
-/* Universal Box Sizing */
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-/* Basic body and layout styles - Added overflow-x */
+/* Add basic styles similar to the previous example: */
 body {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
+    font-family: sans-serif;
+    line-height: 1.4;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+    background-color: #f4f4f4;
     color: #333;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100vh; /* Force full height */
     align-items: center;
-    overflow-x: hidden; /* Prevent horizontal scrolling/whitespace */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+header, footer {
+    background: #333;
+    color: #fff;
+    padding: 0.5rem 0;
+    text-align: center;
+    width: 100%;
+    flex-shrink: 0; /* Prevent header/footer from shrinking */
+    position: fixed; /* Fix header and footer */
+    left: 0;
+    z-index: 100; /* Ensure they stay on top */
 }
 
 header {
-    background: #4a5568;
-    color: #fff;
-    padding: 1.2rem 0;
-    text-align: center;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    top: 0;
 }
 
-header h1 {
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.8em;
-}
+footer { 
+    background: #555; 
+    bottom: 0;
+} 
 
-footer {
-    background: #4a5568;
-    color: #e2e8f0;
-    padding: 1rem 0;
-    text-align: center;
-    width: 100%;
-    margin-top: auto;
-    font-size: 0.9em;
-}
-
-/* Main content area styling */
 main {
-    width: 90%; /* Default width */
-    max-width: 600px; /* Max width on larger screens */
-    margin: 3rem auto;
-    background: #ffffff;
-    padding: 2.5rem 3rem; /* Default padding (for larger screens) */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
+    width: 95%;
+    max-width: 600px;
+    flex: 1; /* Make main content fill available space */
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
     position: relative;
-    flex: 1 0 auto;
-}
-
-/* Headings */
-h2 {
-    margin-top: 0;
-    margin-bottom: 2rem;
-    color: #1a202c;
-    font-weight: 600;
-    text-align: center;
-    font-size: 1.6em;
-}
-
-/* Form element styling */
-label {
     display: flex;
-    align-items: center;
-    margin-bottom: 0.7rem;
-    font-weight: 600;
-    color: #4a5568;
-    font-size: 0.95em;
+    flex-direction: column;
+    margin: 0; /* Remove margin to maximize space */
+    margin-top: 60px; /* Add space for header */
+    margin-bottom: 60px; /* Add space for footer */
+    overflow-y: auto; /* Enable scrolling for main content */
+    max-height: calc(100vh - 120px); /* Subtract header and footer height */
 }
 
-/* Icon Styling - Targeting SVG */
-.label-icon {
-    display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 0.6em;
-    stroke: #4a5568;
-    stroke-width: 2;
-    fill: none;
-    flex-shrink: 0;
-    vertical-align: -0.2em;
-}
-
-
-input[type="number"], select, .radio-group {
-    margin-bottom: 1.5rem;
-}
-
-input[type="number"], select {
-    width: 100%;
-    padding: 0.9rem;
-    border: 1px solid #d1dce5;
-    border-radius: 6px;
-    /* box-sizing: border-box; */ /* Handled by universal rule now */
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    color: #2d3748;
-    background-color: #f8fafc;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-input[type="number"]:focus, select:focus {
-     border-color: #5cb85c;
-     outline: none;
-     box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.15);
-     background-color: #fff;
-}
-
-
-input[type="radio"] {
-    margin-right: 0.5rem;
-    accent-color: #5cb85c;
-    transform: scale(1.1);
-    vertical-align: middle;
-}
-
-.radio-group label {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 1.5rem;
-    font-weight: 400;
-    color: #4a5568;
-    cursor: pointer;
-    font-size: 1rem;
-}
-/* Remove icon styling from radio group labels */
-.radio-group label .label-icon {
-    display: none;
-}
-
-
-input[type="range"] {
-    width: 80%;
-    margin-right: 10px;
-    vertical-align: middle;
-    cursor: pointer;
-    accent-color: #5cb85c;
-}
-
-/* Button Styling */
-button {
-    display: block;
-    width: 100%;
-    background-image: linear-gradient(to bottom, #63c763, #51a851);
+/* Header title styling */
+header h1 {
     color: #fff;
-    padding: 0.9rem 1.5rem;
-    border: none;
-    border-bottom: 2px solid #418c41;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-top: 2rem;
-    transition: background-image 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
-    font-family: 'Poppins', sans-serif;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 0;
+    padding: 0.5rem 0;
+    font-size: 1.5rem;
 }
 
-button:hover {
-    background-image: linear-gradient(to bottom, #6ad06a, #5cb85c);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-button:active {
-    transform: scale(0.98) translateY(1px);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    border-bottom-width: 1px;
+/* Content headings */
+main h2 { 
+    margin-bottom: 0.75rem; 
+    color: #333;
+    font-size: 1.3rem;
 }
 
-/* --- Step Transitions (Max-Height + Fade) --- */
+/* Step container styling */
 .step {
+    visibility: hidden;
     opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.4s ease-out, max-height 0.6s ease-in-out;
-    margin-bottom: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Default to center for question steps */
+}
+
+/* Keep questions centered but let results flow from top */
+#step-results.step {
+    justify-content: flex-start; /* Only results start from top */
 }
 
 .step.active {
+    visibility: visible;
     opacity: 1;
-    max-height: 1000px; /* Adjust if needed */
+    transform: translateX(0);
+    position: relative;
+    pointer-events: all;
+    padding: 1rem;
+    overflow-y: auto; /* Enable scrolling for long content */
+    max-height: calc(100vh - 120px); /* Match main's max-height */
+}
+
+/* Form elements */
+.form-group {
     margin-bottom: 1rem;
 }
 
+label { 
+    display: block; 
+    margin-bottom: 0.3rem; 
+    font-weight: bold;
+}
 
-/* --- Results & Quote Styling --- */
+input[type="number"], select { 
+    width: 100%; 
+    padding: 0.5rem; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-sizing: border-box;
+    margin-bottom: 0.75rem;
+}
+
+.radio-group {
+    margin-bottom: 0.75rem;
+}
+
+.radio-group label { 
+    display: inline-block; 
+    margin-right: 1rem; 
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+input[type="radio"] { 
+    margin-right: 0.3rem;
+}
+
+input[type="range"] { 
+    width: 80%; 
+    margin-right: 10px;
+    margin-bottom: 0.5rem;
+}
+
+button { 
+    display: inline-block; 
+    background: #5cb85c; 
+    color: #fff; 
+    padding: 0.6rem 1.2rem; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 0.9rem; 
+    margin-top: auto; /* Push button to bottom */
+    transition: background-color 0.3s ease;
+}
+
+button:hover { 
+    background: #4cae4c; 
+}
+
+/* Results styling */
 #results-summary {
-    margin-top: 2rem;
-    padding: 1.8rem;
-    background-color: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-left: 5px solid #4ade80;
-    border-radius: 8px;
-    line-height: 1.7;
-    color: #166534;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    padding: 1rem 0; /* Add vertical padding */
 }
 
-#results-summary p {
-    margin: 0.7rem 0;
-}
-#results-summary strong {
-    font-weight: 600;
-    color: #047857;
-}
-
-
-#motivational-quote {
-    margin-top: 2.5rem;
-    padding: 1.5rem;
-    border-top: 1px dashed #d1dce5;
-    font-style: italic;
-    text-align: center;
-    color: #64748b;
-    font-size: 1.1em;
-    line-height: 1.6;
-    min-height: 3em;
-}
-
-#worry-output {
-    display: inline-block;
-    min-width: 70px;
-    font-weight: 600;
-    vertical-align: middle;
-    color: #1e293b;
-    background-color: #e2e8f0;
-    padding: 0.3em 0.6em;
-    border-radius: 6px;
-    margin-left: 5px;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-}
-
-/* --- Loading Spinner Styles --- */
-#results-loading {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #94a3b8;
-    font-style: italic;
-    min-height: 200px;
-}
-
-.loading-spinner {
-    width: 45px;
-    height: 45px;
-    border: 5px solid #e2e8f0;
-    border-top: 5px solid #68d391;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1.2rem auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* --- Styles for Result Action Buttons --- */
-.results-actions {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-around;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.secondary-btn {
-    width: auto;
-    background-image: linear-gradient(to bottom, #a0aec0, #718096);
-    border: none;
-    border-bottom: 2px solid #4a5568;
+#results-summary p { 
+    margin: 0.4rem 0;
     font-size: 0.95rem;
-    padding: 0.6rem 1.2rem;
-    margin-top: 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-image 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
-    font-family: 'Poppins', sans-serif;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
-.secondary-btn:hover {
-    background-image: linear-gradient(to bottom, #b0c4de, #8190a6);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+#motivational-quote { 
+    margin-top: 1rem; 
+    font-style: italic; 
+    text-align: center; 
+    color: #555; 
+    padding: 0.75rem; 
+    border-top: 1px dashed #ccc;
+    font-size: 0.9rem;
 }
 
-.secondary-btn:active {
-    transform: scale(0.98) translateY(1px);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    border-bottom-width: 1px;
+#worry-output { 
+    display: inline-block; 
+    min-width: 40px; 
+    font-weight: bold;
 }
 
-/* Style for icons inside buttons */
-.button-icon {
-    display: inline-block;
-    width: 1.1em;
-    height: 1.1em;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    vertical-align: -0.15em;
+#results-loading { 
+    text-align: center; 
+    padding: 0.75rem; 
+    color: #777; 
+    font-style: italic;
 }
 
+.result-actions {
+    margin-top: 1rem;
+    text-align: center;
+}
 
-/* --- Media Query for Mobile Responsiveness --- */
-@media (max-width: 640px) {
-    body {
-        background: #f0f4f8;
+.result-actions button {
+    margin: 0 0.3rem;
+}
+
+#reset-button {
+    background-color: #dc3545;
+}
+
+#reset-button:hover {
+    background-color: #c82333;
+}
+
+/* Results specific styling */
+#step-results {
+    padding-bottom: 2rem; /* Add extra padding at bottom for results */
+}
+
+/* Add padding to the bottom of the last element in results */
+#results-summary > *:last-child {
+    margin-bottom: 1rem;
+}
+
+/* Ensure result boxes have proper spacing */
+#results-summary > div {
+    margin: 1.5rem 0;
+}
+
+/* Mobile Optimization */
+@media screen and (max-width: 480px) {
+    main {
+        width: 100%;
+        margin-top: 50px; /* Slightly less margin on mobile */
+        margin-bottom: 50px;
+        padding: 0.75rem;
+        max-height: calc(100vh - 100px); /* Adjust for smaller header/footer */
     }
 
-    header {
-        padding: 0.8rem 0;
+    .step {
+        min-height: auto; /* Remove fixed height on mobile */
+    }
+
+    #step-age, #step-sex, #step-country, #step-worry {
+        justify-content: center; /* Ensure questions stay centered on mobile */
+        min-height: calc(100vh - 120px); /* Give enough height for centering */
     }
 
     header h1 {
-        font-size: 1.4em;
-        padding: 0 1rem;
-    }
-
-    main {
-        width: 98%;
-        margin: 0.5rem auto 0.5rem auto;
-        padding: 0.7rem 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-height: 70vh;
-    }
-
-    h2 {
-        font-size: 1.3em;
-        margin-bottom: 1.2rem;
-    }
-
-    label {
-        font-size: 0.9em;
-        margin-bottom: 0.5rem;
-    }
-
-    input[type="number"], select {
-        padding: 0.7rem;
-        margin-bottom: 1rem;
-    }
-
-    button {
-        padding: 0.8rem 1.2rem;
-        margin-top: 1.5rem;
-        font-size: 1rem;
-    }
-
-    .results-actions {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.7rem;
-        padding-bottom: 1rem;
-        margin-bottom: 0.7rem;
-    }
-
-    .secondary-btn {
-        width: 100%;
-        min-width: 0;
-        margin: 0;
-    }
-
-    #results-summary {
-        margin-top: 0.7rem;
-        padding: 0.7rem;
-    }
-
-    #results-summary p {
-        margin: 0.5rem 0;
-    }
-
-    #motivational-quote {
-        margin-top: 0.7rem;
-        padding: 0.5rem;
-        font-size: 0.95em;
-    }
-
-    #worry-output {
-        min-width: 60px;
-        padding: 0.2em 0.4em;
+        font-size: 1.3rem; /* Smaller header text on mobile */
+        padding: 0.3rem 0;
     }
 
     footer {
-        padding: 0.8rem 0;
-        font-size: 0.8em;
-        margin-top: 0;
+        padding: 0.3rem 0;
     }
 
-    /* Make radio group more compact */
-    .radio-group {
-        margin-bottom: 1rem;
+    button {
+        width: 100%;
+        margin: 0.5rem 0;
     }
 
-    .radio-group label {
-        margin-right: 1rem;
-        font-size: 0.9rem;
+    .result-actions button {
+        width: auto;
+        padding: 0.5rem 1rem;
     }
 
-    /* Adjust range input for mobile */
     input[type="range"] {
         width: 70%;
     }
 
-    #refresh-quote-btn,
-    #restart-btn {
-        display: block !important;
-        width: 100%;
-        min-width: 0;
-        margin: 0.5rem 0 0 0;
-    }
-
-    main, .step, .step.active, #step-results {
-        margin-bottom: 0.5rem;
-        min-height: 0;
-    }
-
-    .step.active {
-        margin-top: auto;
-        margin-bottom: auto;
-    }
-
-    /* Don't center the results step, let it flow naturally */
-    #step-results.step.active {
-        margin-top: 0;
-        margin-bottom: 0;
+    #worry-output {
+        width: 25%;
+        text-align: right;
     }
 }
-/* --- END Media Query --- */
-
-html, body {
-  height: 100%;
-}
-
