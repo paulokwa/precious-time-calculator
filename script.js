@@ -61,17 +61,18 @@ async function populateCountryList() {
 }
 
 // --- Data: Motivational Quotes ---
-const quotes = [
-    "Time is the most valuable thing a man can spend. - Theophrastus",
-    "Lost time is never found again. - Benjamin Franklin",
-    "Your time is limited, don't waste it living someone else's life. - Steve Jobs",
-    "The key is in not spending time, but in investing it. - Stephen R. Covey",
-    "The future is something which everyone reaches at the rate of sixty minutes an hour, whatever he does, whoever he is. - C.S. Lewis",
-    "Don't watch the clock; do what it does. Keep going. - Sam Levenson",
-    "Time flies over us, but leaves its shadow behind. - Nathaniel Hawthorne",
-    "The best time to plant a tree was 20 years ago. The second best time is now. - Chinese Proverb"
-    // Add more quotes if you like
-];
+// We will now fetch quotes from ZenQuotes API instead of using a hard-coded array.
+// const quotes = [
+//     "Time is the most valuable thing a man can spend. - Theophrastus",
+//     "Lost time is never found again. - Benjamin Franklin",
+//     "Your time is limited, don't waste it living someone else's life. - Steve Jobs",
+//     "The key is in not spending time, but in investing it. - Stephen R. Covey",
+//     "The future is something which everyone reaches at the rate of sixty minutes an hour, whatever he does, whoever he is. - C.S. Lewis",
+//     "Don't watch the clock; do what it does. Keep going. - Sam Levenson",
+//     "Time flies over us, but leaves its shadow behind. - Nathaniel Hawthorne",
+//     "The best time to plant a tree was 20 years ago. The second best time is now. - Chinese Proverb"
+//     // Add more quotes if you like
+// ];
 
 // --- DOM Elements ---
 // Select all the HTML elements we need to interact with
@@ -89,6 +90,39 @@ const steps = document.querySelectorAll('.step'); // Gets all sections with clas
 // Update the displayed worry hours when the slider changes
 worrySlider.addEventListener('input', () => {
     worryOutput.textContent = `${worrySlider.value} hour${worrySlider.value == 1 ? '' : 's'}`;
+});
+
+// Add keyboard event listeners for Enter key
+document.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        const currentStep = document.querySelector('.step.active');
+
+        // Prevent default form submission behavior
+        event.preventDefault();
+
+        // Handle different steps
+        if (currentStep.id === 'step-intro') {
+            nextStep('step-age');
+        }
+        else if (currentStep.id === 'step-age') {
+            if (validateAge()) {
+                nextStep('step-sex');
+            }
+        }
+        else if (currentStep.id === 'step-sex') {
+            if (validateSex()) {
+                nextStep('step-country');
+            }
+        }
+        else if (currentStep.id === 'step-country') {
+            if (validateCountry()) {
+                nextStep('step-worry');
+            }
+        }
+        else if (currentStep.id === 'step-worry') {
+            calculateTime();
+        }
+    }
 });
 
 // --- Functions ---
@@ -275,6 +309,65 @@ async function fetchLifeExpectancy(countryCode, sexCode) {
     }
 }
 
+/**
+ * Fetches a random motivational quote from ZenQuotes API via Netlify function.
+ * @returns {Promise<object|null>} A Promise that resolves with the quote object {q: 'quote', a: 'author'}, or null if an error occurs.
+ */
+async function fetchRandomQuote() {
+    // Call our new Netlify Function proxy instead of the external API directly
+    const apiUrl = '/.netlify/functions/get-quote';
+
+    console.log("Attempting to fetch quote via Netlify Function:", apiUrl); // Log request to Netlify function
+
+    try {
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            console.error(`Error fetching quote via proxy function: ${response.status}`);
+            // Try to parse error body from our function if available
+            let errorDetails = 'Failed to fetch quote.';
+            try {
+                const errorBody = await response.json();
+                if (errorBody && errorBody.error) {
+                    errorDetails = errorBody.error;
+                }
+            } catch (parseError) {
+                console.error('Could not parse error body from quote proxy function.', parseError);
+            }
+            console.error('Quote proxy function returned error details:', errorDetails);
+            // We won't return null here; let showNewQuote handle the display of the error message
+            return null; 
+        }
+
+        const data = await response.json();
+        console.log("Quote Proxy Function Response Data:", data); // Log the data received from our function
+
+        // The proxy function should return a single quote object {q: 'quote', a: 'author'}
+        if (data && data.q && data.a) {
+            return data; // Return the quote object
+        } else {
+            console.error('Received invalid data structure from quote proxy API', data);
+            return null;
+        }
+
+    } catch (error) {
+        console.error('Network error fetching quote proxy function:', error);
+        return null;
+    }
+}
+
+/**
+ * Shows a new random quote in the quote div, fetched from API
+ */
+async function showNewQuote() {
+    const quote = await fetchRandomQuote();
+    if (quote) {
+        quoteDiv.innerHTML = `"${quote.q}" - ${quote.a}`; // Display quote and author
+    } else {
+        // This message will be shown if fetchRandomQuote returned null (due to API error or invalid data)
+        quoteDiv.textContent = 'Could not fetch a quote at this time.'; 
+    }
+}
 
 /**
  * Main function to calculate and display the time breakdown.
@@ -289,7 +382,8 @@ async function calculateTime() {
     // --- Stage 1: Setup ---
     loadingDiv.style.display = 'block';
     resultsSummaryDiv.innerHTML = '';
-    quoteDiv.textContent = '';
+    // Clear previous quote before fetching new one
+    quoteDiv.textContent = ''; 
     nextStep('step-results');
 
     // --- Stage 2: Get User Inputs ---
@@ -359,7 +453,7 @@ async function calculateTime() {
         if (selectedSex === 'SEX_FMLE') sexDisplay = 'Female';
 
         let resultsHTML = `
-            <p>Based on API data, average life expectancy for ${selectedCountryName} (${sexDisplay}) is around <strong>${avgLifeExpectancy.toFixed(1)} years</strong>.</p>
+            <p>According to the World Health Organization (WHO), the average life expectancy for ${selectedCountryName} (${sexDisplay}) is around <strong>${avgLifeExpectancy.toFixed(1)} years</strong>.</p>
             <p>At age ${currentAge}, you have approximately:</p>
             <div style="text-align: center; margin: 1.5em 0; padding: 1em; background-color: #f8f9fa; border-radius: 8px;">
                 <span style="font-size: 1.8em; color: #2c3e50;"><strong>${yearsRemaining.toFixed(1)} years</strong></span>
@@ -415,23 +509,20 @@ async function calculateTime() {
         resultsSummaryDiv.innerHTML = resultsHTML;
 
         // --- Stage 7: Display Quote ---
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        quoteDiv.textContent = `"${quotes[randomIndex]}"`;
+        await showNewQuote();
     }
 }
 
 // --- Initial Setup ---
 // This runs when the HTML page has fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Ensure only the first step ('step-age') is visible when the page loads
+    // Ensure only the intro step ('step-intro') is visible when the page loads
     steps.forEach((step, index) => {
-        step.classList.toggle('active', index === 0);
+        step.classList.toggle('active', step.id === 'step-intro');
     });
     // Set the initial text for the worry slider output
     worryOutput.textContent = `${worrySlider.value} hour${worrySlider.value == 1 ? '' : 's'}`;
 });
-
-// Add these functions at the end of the file
 
 /**
  * Resets the calculator to the initial state
@@ -444,18 +535,10 @@ function resetCalculator() {
     worrySlider.value = 1;
     worryOutput.textContent = '1 hour';
 
-    // Clear results
+    // Clear results and quote
     resultsSummaryDiv.innerHTML = '';
     quoteDiv.textContent = '';
     
     // Go back to first step
-    nextStep('step-age');
-}
-
-/**
- * Shows a new random quote in the quote div
- */
-function showNewQuote() {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    quoteDiv.textContent = quotes[randomIndex];
+    nextStep('step-intro'); // Assuming intro is the first step now
 }

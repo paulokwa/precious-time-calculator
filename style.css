@@ -78,6 +78,15 @@ main h2 {
 
 /* Desktop-specific styles */
 @media screen and (min-width: 481px) {
+    main {
+        /* Remove fixed height constraints and overflow on desktop */
+        min-height: auto; /* Allow height to be determined by content */
+        overflow-y: visible; /* Prevent scrollbar on main */
+        
+        /* Increase max-width for desktop to allow more horizontal space */
+        max-width: 800px; 
+    }
+    
     .step {
         top: 50%;
         left: 0;
@@ -93,8 +102,9 @@ main h2 {
     #step-results.active {
         top: 0;
         transform: none;
-        height: 100%;
-        overflow-y: auto;
+        /* Remove fixed height and overflow on results for desktop */
+        height: auto; /* Allow height to be determined by content */
+        overflow-y: visible; /* Prevent scrollbar on results */
     }
 }
 
@@ -179,6 +189,7 @@ button:hover {
 /* Results styling */
 #results-summary {
     padding: 1rem 0; /* Add vertical padding */
+    text-align: center; /* Center align text in results summary */
 }
 
 #results-summary p { 
@@ -189,7 +200,7 @@ button:hover {
 #motivational-quote { 
     margin-top: 1rem; 
     font-style: italic; 
-    text-align: center; 
+    text-align: center; /* Center align quote text */
     color: #555; 
     padding: 0.75rem; 
     border-top: 1px dashed #ccc;
@@ -229,6 +240,10 @@ button:hover {
 /* Results specific styling */
 #step-results {
     padding-bottom: 2rem;
+}
+
+#step-results h2 {
+    text-align: center; /* Center align the heading on the results page */
 }
 
 #results-summary > *:last-child {
