@@ -74,6 +74,89 @@ async function populateCountryList() {
 //     // Add more quotes if you like
 // ];
 
+// --- Data: Emergency Numbers ---
+const emergencyNumbers = {
+    americas: [
+        { flag: "🇦🇷", name: "Argentina", number: "135 (Buenos Aires) / 0800 345 1435 (nationwide)" },
+        { flag: "🇧🇴", name: "Bolivia", number: "800 11 0077" },
+        { flag: "🇧🇷", name: "Brazil", number: "188" },
+        { flag: "🇨🇦", name: "Canada", number: "988" },
+        { flag: "🇨🇱", name: "Chile", number: "600 360 7777" },
+        { flag: "🇨🇴", name: "Colombia", number: "106" },
+        { flag: "🇨🇷", name: "Costa Rica", number: "800 376 76 76" },
+        { flag: "🇩🇴", name: "Dominican Republic", number: "*462" },
+        { flag: "🇪🇨", name: "Ecuador", number: "171" },
+        { flag: "🇬🇹", name: "Guatemala", number: "502 2298 3579" },
+        { flag: "🇭🇳", name: "Honduras", number: "2236 4000" },
+        { flag: "🇲🇽", name: "Mexico", number: "800 472 7835" },
+        { flag: "🇵🇦", name: "Panama", number: "800 2121" },
+        { flag: "🇵🇾", name: "Paraguay", number: "021 204 019" },
+        { flag: "🇵🇪", name: "Peru", number: "113 opción 5" },
+        { flag: "🇺🇸", name: "United States", number: "988" },
+        { flag: "🇺🇾", name: "Uruguay", number: "0800 0767" },
+        { flag: "🇻🇪", name: "Venezuela", number: "0 800 838 4333" }
+    ],
+    europe: [
+        { flag: "🇦🇹", name: "Austria", number: "142" },
+        { flag: "🇧🇪", name: "Belgium", number: "0800 32 123" },
+        { flag: "🇭🇷", name: "Croatia", number: "116 123" },
+        { flag: "🇨🇿", name: "Czech Republic", number: "116 111" },
+        { flag: "🇩🇰", name: "Denmark", number: "70 201 201" },
+        { flag: "🇫🇮", name: "Finland", number: "09 2525 0116" },
+        { flag: "🇫🇷", name: "France", number: "01 45 39 40 00" },
+        { flag: "🇩🇪", name: "Germany", number: "0800 111 0 111" },
+        { flag: "🇬🇷", name: "Greece", number: "1018" },
+        { flag: "🇭🇺", name: "Hungary", number: "116 123" },
+        { flag: "🇮🇪", name: "Ireland", number: "116 123" },
+        { flag: "🇮🇹", name: "Italy", number: "0223 232 325" },
+        { flag: "🇱🇻", name: "Latvia", number: "116 123" },
+        { flag: "🇱🇹", name: "Lithuania", number: "8 800 28888" },
+        { flag: "🇱🇺", name: "Luxembourg", number: "454545" },
+        { flag: "🇳🇱", name: "Netherlands", number: "0800 0113" },
+        { flag: "🇳🇴", name: "Norway", number: "116 123" },
+        { flag: "🇵🇱", name: "Poland", number: "800 70 2222" },
+        { flag: "🇵🇹", name: "Portugal", number: "213 544 545" },
+        { flag: "🇷🇴", name: "Romania", number: "0800 801 200" },
+        { flag: "🇷🇺", name: "Russia", number: "051" },
+        { flag: "🇷🇸", name: "Serbia", number: "0800 300 303" },
+        { flag: "🇸🇰", name: "Slovakia", number: "0800 500 333" },
+        { flag: "🇸🇮", name: "Slovenia", number: "116 123" },
+        { flag: "🇪🇸", name: "Spain", number: "900 202 010" },
+        { flag: "🇸🇪", name: "Sweden", number: "90101" },
+        { flag: "🇨🇭", name: "Switzerland", number: "143" },
+        { flag: "🇬🇧", name: "United Kingdom", number: "116 123" }
+    ],
+    asia: [
+        { flag: "🇦🇺", name: "Australia", number: "13 11 14" },
+        { flag: "🇧🇩", name: "Bangladesh", number: "+880 172 524 1771" },
+        { flag: "🇨🇳", name: "China", number: "800 810 1117 or 010 8295 1332" },
+        { flag: "🇭🇰", name: "Hong Kong", number: "2896 0000" },
+        { flag: "🇮🇳", name: "India", number: "+91 9152987821" },
+        { flag: "🇮🇩", name: "Indonesia", number: "+62 21 5084 1745" },
+        { flag: "🇯🇵", name: "Japan", number: "+81 3 5286 9090" },
+        { flag: "🇲🇾", name: "Malaysia", number: "603 7627 2929" },
+        { flag: "🇳🇿", name: "New Zealand", number: "0800 543 354" },
+        { flag: "🇵🇭", name: "Philippines", number: "1553" },
+        { flag: "🇸🇬", name: "Singapore", number: "1767" },
+        { flag: "🇰🇷", name: "South Korea", number: "1577 0199" },
+        { flag: "🇹🇼", name: "Taiwan", number: "1995" },
+        { flag: "🇹🇭", name: "Thailand", number: "1323" },
+        { flag: "🇻🇳", name: "Vietnam", number: "1900 6237" }
+    ],
+    africa: [
+        { flag: "🇿🇦", name: "South Africa", number: "0800 567 567" },
+        { flag: "🇪🇬", name: "Egypt", number: "+20 2 762 1602" },
+        { flag: "🇬🇭", name: "Ghana", number: "0800 111 222" },
+        { flag: "🇰🇪", name: "Kenya", number: "+254 722 178177" },
+        { flag: "🇲🇦", name: "Morocco", number: "0800 00 47 47" },
+        { flag: "🇳🇬", name: "Nigeria", number: "0809 111 6264" },
+        { flag: "🇸🇳", name: "Senegal", number: "33 860 42 42" },
+        { flag: "🇹🇳", name: "Tunisia", number: "8010 1111" },
+        { flag: "🇺🇬", name: "Uganda", number: "+256 414 664 603" },
+        { flag: "🇿🇼", name: "Zimbabwe", number: "+263 71 643 4732" }
+    ]
+};
+
 // --- DOM Elements ---
 // Select all the HTML elements we need to interact with
 const ageInput = document.getElementById('age');
@@ -86,6 +169,14 @@ const quoteDiv = document.getElementById('motivational-quote');
 const loadingDiv = document.getElementById('results-loading'); // The "Fetching data..." message div
 const steps = document.querySelectorAll('.step'); // Gets all sections with class="step"
 
+// Add elements for hamburger menu and help modal
+const hamburgerIcon = document.getElementById('hamburger-icon');
+const mobileNav = document.getElementById('mobile-nav');
+const helpButtonDesktop = document.getElementById('help-button-desktop');
+const helpButtonMobile = document.getElementById('help-button-mobile');
+const helpModal = document.getElementById('help-modal');
+const closeModalButton = document.querySelector('.modal .close-button');
+
 // --- Event Listeners ---
 // Update the displayed worry hours when the slider changes
 worrySlider.addEventListener('input', () => {
@@ -95,10 +186,15 @@ worrySlider.addEventListener('input', () => {
 // Add keyboard event listeners for Enter key
 document.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
-        const currentStep = document.querySelector('.step.active');
-
         // Prevent default form submission behavior
         event.preventDefault();
+
+        const currentStep = document.querySelector('.step.active');
+        
+        // Do not proceed if modal is open
+        if (helpModal.style.display === 'block') {
+            return;
+        }
 
         // Handle different steps
         if (currentStep.id === 'step-intro') {
@@ -125,7 +221,41 @@ document.addEventListener('keypress', (event) => {
     }
 });
 
+// Add event listener for hamburger icon click
+hamburgerIcon.addEventListener('click', () => {
+    mobileNav.classList.toggle('active');
+});
+
+// Add event listeners for help buttons
+helpButtonDesktop.addEventListener('click', showHelpModal);
+helpButtonMobile.addEventListener('click', showHelpModal);
+
+// Add event listener for modal close button
+closeModalButton.addEventListener('click', closeHelpModal);
+
+// Close modal if clicked outside of modal content
+window.addEventListener('click', (event) => {
+    if (event.target == helpModal) {
+        closeHelpModal();
+    }
+});
+
 // --- Functions ---
+
+/**
+ * Shows the help modal.
+ */
+function showHelpModal() {
+    helpModal.style.display = 'block';
+    populateEmergencyNumbers();
+}
+
+/**
+ * Hides the help modal.
+ */
+function closeHelpModal() {
+    helpModal.style.display = 'none';
+}
 
 /**
  * Validates the age input
@@ -541,4 +671,57 @@ function resetCalculator() {
     
     // Go back to first step
     nextStep('step-intro'); // Assuming intro is the first step now
+}
+
+// --- Functions for Emergency Numbers ---
+
+/**
+ * Populates the emergency numbers lists when the help modal is opened
+ */
+function populateEmergencyNumbers() {
+    const regions = ['americas', 'europe', 'asia', 'africa'];
+    regions.forEach(region => {
+        const listElement = document.getElementById(`${region}-list`);
+        if (listElement) {
+            listElement.innerHTML = emergencyNumbers[region]
+                .map(country => `
+                    <div class="country-item">
+                        <span class="country-flag">${country.flag}</span>
+                        <div class="country-info">
+                            <div class="country-name">${country.name}</div>
+                            <div class="phone-number">${country.number}</div>
+                        </div>
+                    </div>
+                `).join('');
+        }
+    });
+}
+
+/**
+ * Filters the emergency numbers based on search input
+ */
+function filterCountries() {
+    const searchTerm = document.getElementById('country-search').value.toLowerCase();
+    const regions = ['americas', 'europe', 'asia', 'africa'];
+    
+    regions.forEach(region => {
+        const listElement = document.getElementById(`${region}-list`);
+        if (listElement) {
+            const filteredCountries = emergencyNumbers[region].filter(country => 
+                country.name.toLowerCase().includes(searchTerm) || 
+                country.number.toLowerCase().includes(searchTerm)
+            );
+            
+            listElement.innerHTML = filteredCountries
+                .map(country => `
+                    <div class="country-item">
+                        <span class="country-flag">${country.flag}</span>
+                        <div class="country-info">
+                            <div class="country-name">${country.name}</div>
+                            <div class="phone-number">${country.number}</div>
+                        </div>
+                    </div>
+                `).join('');
+        }
+    });
 }

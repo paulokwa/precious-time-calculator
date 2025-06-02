@@ -8,7 +8,24 @@
 </head>
 <body>
     <header>
-        <h1>How Much Time Do You Truly Have?</h1>
+        <div class="header-content">
+            <h1>How Much Time Do You Truly Have?</h1>
+            <!-- Keep the desktop help button for now, will hide on mobile via CSS -->
+            <button id="help-button-desktop" class="help-button">Need Help?</button>
+        </div>
+        <!-- Hamburger icon for mobile -->
+        <div class="hamburger-icon" id="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!-- Mobile navigation menu -->
+        <nav class="mobile-nav" id="mobile-nav">
+            <ul>
+                <li><button id="help-button-mobile" class="help-button">Need Help?</button></li>
+                <!-- Add other mobile menu items here if needed -->
+            </ul>
+        </nav>
     </header>
 
     <main>
@@ -70,6 +87,42 @@
             </div>
         </section>
     </main>
+
+    <!-- Simple Help Modal Structure -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeHelpModal()">&times;</span>
+            <h2>Need Help?</h2>
+            <p>If you are struggling with worry or anxiety, please consider reaching out for professional help.</p>
+            
+            <div class="emergency-numbers">
+                <div class="search-container">
+                    <input type="text" id="country-search" placeholder="Search for your country..." onkeyup="filterCountries()">
+                </div>
+                
+                <div class="regions-container">
+                    <div class="region">
+                        <h3>Americas</h3>
+                        <div class="country-list" id="americas-list"></div>
+                    </div>
+                    <div class="region">
+                        <h3>Europe</h3>
+                        <div class="country-list" id="europe-list"></div>
+                    </div>
+                    <div class="region">
+                        <h3>Asia & Pacific</h3>
+                        <div class="country-list" id="asia-list"></div>
+                    </div>
+                    <div class="region">
+                        <h3>Africa & Middle East</h3>
+                        <div class="country-list" id="africa-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="disclaimer">Remember, you don't have to go through this alone. These helplines are available 24/7 in most countries.</p>
+        </div>
+    </div>
 
     <footer>
         <p>Time is precious. Use it wisely.</p>
