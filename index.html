@@ -9,7 +9,6 @@
 <body>
     <header>
         <h1>How Much Time Do You Truly Have?</h1>
-        <button id="help-button" class="help-button">Need Help?</button>
     </header>
 
     <main>
@@ -68,39 +67,6 @@
             <div class="result-actions">
                 <button id="reset-button" onclick="resetCalculator()">Start Over</button>
                 <button onclick="showNewQuote()">New Quote</button>
-            </div>
-        </section>
-
-        <section id="mental-health-support" class="step">
-            <h2>Mental Health Support</h2>
-            <div class="support-content">
-                <p>It's important to recognize that excessive worry can sometimes be a sign of anxiety or other mental health conditions. If you're experiencing persistent worry, anxiety, or other mental health concerns, you're not alone, and help is available.</p>
-                
-                <div class="crisis-support">
-                    <h3>Need to Talk to Someone?</h3>
-                    <p>Select your country to find a confidential crisis helpline:</p>
-                    <select id="crisis-country" name="crisis-country">
-                        <option value="" disabled selected>-- Select Country --</option>
-                    </select>
-                    <div id="crisis-number" class="crisis-number"></div>
-                </div>
-
-                <div class="support-info">
-                    <h3>Understanding Mental Health</h3>
-                    <p>Mental health is just as important as physical health. If you're experiencing any of these symptoms, consider reaching out for support:</p>
-                    <ul>
-                        <li>Persistent worry or anxiety that interferes with daily life</li>
-                        <li>Difficulty sleeping or concentrating</li>
-                        <li>Changes in appetite or energy levels</li>
-                        <li>Feelings of hopelessness or worthlessness</li>
-                        <li>Thoughts of self-harm or suicide</li>
-                    </ul>
-                    <p>Remember: Seeking help is a sign of strength, not weakness.</p>
-                </div>
-            </div>
-            <div class="navigation-buttons">
-                <button onclick="hideMentalHealthSupport()" class="back-button">← Back to Previous Step</button>
-                <button onclick="resetCalculator()" class="start-over-button">Start Over</button>
             </div>
         </section>
     </main>
