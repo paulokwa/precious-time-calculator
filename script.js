@@ -28,7 +28,21 @@ async function populateCountryList() {
         const response = await fetch('/.netlify/functions/get-country-list');
         
         if (!response.ok) {
-            throw new Error(`Failed to fetch countries: ${response.status}`);
+            // Try to get error details from response body
+            let errorDetails = `Failed to fetch countries: ${response.status}`;
+            try {
+                const errorData = await response.json();
+                if (errorData.error) {
+                    errorDetails = errorData.error;
+                }
+                if (errorData.details) {
+                    errorDetails += ` - ${errorData.details}`;
+                }
+                console.error('Error response body:', errorData);
+            } catch (e) {
+                console.error('Could not parse error response:', e);
+            }
+            throw new Error(errorDetails);
         }
 
         const data = await response.json();
