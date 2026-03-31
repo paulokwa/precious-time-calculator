@@ -209,6 +209,20 @@ function nextStep(nextStepId) {
 }
 
 /**
+ * Browses back to the previous step without validation
+ * @param {string} prevStepId - The ID of the HTML section element to show.
+ */
+function prevStep(prevStepId) {
+    steps.forEach(step => step.classList.remove('active')); // Hide all
+    const prevStepElement = document.getElementById(prevStepId);
+    if (prevStepElement) {
+        prevStepElement.classList.add('active'); // Show the previous one
+    } else {
+        console.error("Error: Previous step not found with ID:", prevStepId);
+    }
+}
+
+/**
  * Fetches Life Expectancy data VIA THE NETLIFY PROXY FUNCTION.
  * @param {string} countryCode - The country code (e.g., 'CAN', 'USA').
  * @param {string} sexCode - The sex code (e.g., 'SEX_MLE', 'SEX_FMLE').

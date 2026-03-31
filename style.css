@@ -225,6 +225,18 @@ h1, h2, h3, .hero-title, .small-title {
     box-sizing: border-box;
 }
 
+.input-wrapper select {
+    font-size: 1.1rem;
+    padding: 1.25rem 1rem;
+    cursor: pointer;
+}
+
+.input-wrapper select option {
+    font-size: 1rem;
+    color: #1f2937;
+    background-color: #f7f8f9;
+}
+
 .radio-group-vertical {
     display: flex;
     flex-direction: column;
@@ -270,8 +282,36 @@ h1, h2, h3, .hero-title, .small-title {
     color: var(--gold-dim);
 }
 
-.btn-continue {
+.action-buttons {
+    display: flex;
+    gap: 1rem;
     margin-top: 3rem;
+    width: 100%;
+}
+
+.action-buttons button {
+    margin-top: 0;
+    flex: 1;
+}
+
+.btn-back {
+    background: transparent;
+    color: var(--gold-dim);
+    border: 1px solid var(--gold-dim);
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.btn-back:hover {
+    background: rgba(205, 171, 109, 0.1);
+    color: var(--gold);
+}
+
+.btn-continue {
     background: #061225;
     color: #fff;
     border: 1px solid var(--gold);

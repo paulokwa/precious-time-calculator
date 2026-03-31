@@ -12,7 +12,7 @@
     <div id="app-container">
         
         <!-- HERO / INTRO -->
-        <section id="step-intro" class="step step-fullscreen active" style="background-image: url('assets/hero_bg.png');">
+        <section id="step-intro" class="step step-fullscreen active" style="background-image: url('assets/Majestic%20mountain%20with%20glowing%20clock.png');">
             <header class="top-nav">
                 <nav>
                     <a href="#">Home</a>
@@ -57,7 +57,10 @@
                         <input type="number" id="age" name="age" min="1" max="120" required value="25">
                     </div>
                     
-                    <button class="btn-continue" onclick="nextStep('step-sex')">Continue</button>
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="prevStep('step-intro')">Back</button>
+                        <button class="btn-continue" onclick="nextStep('step-sex')">Continue</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -87,7 +90,10 @@
                         </label>
                     </div>
                     
-                    <button class="btn-continue" onclick="nextStep('step-country')">Continue</button>
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="prevStep('step-age')">Back</button>
+                        <button class="btn-continue" onclick="nextStep('step-country')">Continue</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -114,7 +120,10 @@
                         </select>
                     </div>
                     
-                    <button class="btn-continue" onclick="nextStep('step-worry')">Continue</button>
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="prevStep('step-sex')">Back</button>
+                        <button class="btn-continue" onclick="nextStep('step-worry')">Continue</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -140,7 +149,10 @@
                         <span id="worry-output" class="gold-text">1 hour</span>
                     </div>
                     
-                    <button class="btn-continue" onclick="calculateTime()">Calculate My Time</button>
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="prevStep('step-country')">Back</button>
+                        <button class="btn-continue" onclick="calculateTime()">Calculate My Time</button>
+                    </div>
                 </div>
             </div>
         </section>
