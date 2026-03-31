@@ -469,10 +469,10 @@ async function calculateTime() {
         let resultsHTML = `
             <p>According to the World Health Organization (WHO), the average life expectancy for ${selectedCountryName} (${sexDisplay}) is around <strong>${avgLifeExpectancy.toFixed(1)} years</strong>.</p>
             <p>At age ${currentAge}, you have approximately:</p>
-            <div style="text-align: center; margin: 1.5em 0; padding: 1em; background-color: #f8f9fa; border-radius: 8px;">
-                <span style="font-size: 1.8em; color: #2c3e50;"><strong>${yearsRemaining.toFixed(1)} years</strong></span>
+            <div style="text-align: center; margin: 1.5em 0; padding: 1.5em; background: var(--bg-surface-hover); border: 1px solid var(--glass-border); border-radius: var(--border-radius);">
+                <span style="font-size: 2em; color: var(--primary-light);"><strong>${yearsRemaining.toFixed(1)} years</strong></span>
                 <br>
-                <span style="color: #666; font-size: 0.9em;">
+                <span style="color: var(--text-secondary); font-size: 0.9em; margin-top: 0.5rem; display: inline-block;">
                     (that's about ${totalDaysRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} days or 
                     ${totalHoursRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} hours)
                 </span>
@@ -481,22 +481,22 @@ async function calculateTime() {
 
         if (yearsRemaining > 0) {
             resultsHTML += `
-                <hr style="border: 0; border-top: 1px dashed #ccc; margin: 1em 0;">
+                <hr style="border: 0; border-top: 1px dashed var(--glass-border); margin: 1.5em 0;">
                 <p>If you spend <strong>${dailyWorryHours} hours</strong> worrying each day, over your remaining time that adds up to:</p>
-                <div style="text-align: center; margin: 1em 0; padding: 1em; background-color: #fff3e0; border-radius: 8px;">
-                    <span style="font-size: 1.4em; color: #e67e22;"><strong>${worryYears.toFixed(1)} years</strong> spent worrying</span>
+                <div style="text-align: center; margin: 1.5em 0; padding: 1.5em; background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.2); border-radius: var(--border-radius);">
+                    <span style="font-size: 1.6em; color: #f87171;"><strong>${worryYears.toFixed(1)} years</strong> spent worrying</span>
                     <br>
-                    <span style="color: #666; font-size: 0.9em;">
+                    <span style="color: var(--text-secondary); font-size: 0.9em; margin-top: 0.5rem; display: inline-block;">
                         (approximately ${totalWorryDays.toLocaleString(undefined, {maximumFractionDigits: 0})} days or 
                         ${totalWorryHours.toLocaleString(undefined, {maximumFractionDigits: 0})} hours)
                     </span>
                 </div>
-                <p>That worry time represents <strong>${worryPercentage.toFixed(1)}%</strong> of your potential remaining <em>waking</em> hours.</p>
+                <p>That worry time represents <strong style="color: #f87171;">${worryPercentage.toFixed(1)}%</strong> of your potential remaining <em>waking</em> hours.</p>
                 <p>Your effective time remaining (after subtracting worry time) would be:</p>
-                <div style="text-align: center; margin: 1em 0; padding: 1em; background-color: #e8f5e9; border-radius: 8px;">
-                    <span style="font-size: 1.6em; color: #2e7d32;"><strong>${effectiveYearsRemaining.toFixed(1)} years</strong> of worry-free time</span>
+                <div style="text-align: center; margin: 1.5em 0; padding: 1.5em; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: var(--border-radius);">
+                    <span style="font-size: 1.8em; color: #4ade80;"><strong>${effectiveYearsRemaining.toFixed(1)} years</strong> of worry-free time</span>
                     <br>
-                    <span style="color: #666; font-size: 0.9em;">
+                    <span style="color: var(--text-secondary); font-size: 0.9em; margin-top: 0.5rem; display: inline-block;">
                         (about ${effectiveDaysRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} days or 
                         ${effectiveHoursRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} hours)
                     </span>
@@ -506,13 +506,13 @@ async function calculateTime() {
             // Add a practical perspective if worry time is significant
             if (worryYears >= 1) {
                 resultsHTML += `
-                    <div style="margin-top: 1.5em; padding: 1em; background-color: #f5f5f5; border-radius: 8px;">
-                        <p style="margin: 0;"><strong>💡 Perspective:</strong> In ${worryYears.toFixed(1)} years, you could:</p>
-                        <ul style="margin-top: 0.5em;">
-                            <li>Learn multiple languages</li>
-                            <li>Complete a degree program</li>
-                            <li>Master several new skills</li>
-                            <li>Travel to dozens of countries</li>
+                    <div style="margin-top: 1.5em; padding: 1.5em; background: var(--bg-surface); border: 1px solid var(--glass-border); border-radius: var(--border-radius);">
+                        <p style="margin: 0; color: var(--primary-light);"><strong>💡 Perspective:</strong> In ${worryYears.toFixed(1)} years, you could:</p>
+                        <ul style="margin-top: 1em; color: var(--text-secondary); list-style-type: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.5rem;">✦ Learn multiple languages</li>
+                            <li style="margin-bottom: 0.5rem;">✦ Complete a degree program</li>
+                            <li style="margin-bottom: 0.5rem;">✦ Master several new skills</li>
+                            <li>✦ Travel to dozens of countries</li>
                         </ul>
                     </div>
                 `;
