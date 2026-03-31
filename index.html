@@ -3,79 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Precious Time (API Version)</title>
+    <title>Your Precious Time</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>How Much Time Do You Truly Have?</h1>
-    </header>
 
-    <main>
-        <section id="step-intro" class="step active">
-            <img src="assets/hero_image.png" alt="Precious Time Glassmorphic Clock" class="hero-image">
-            <h2>Discover Your Precious Time</h2>
-            <p>Have you ever stopped to think about the true value of your time? This calculator is designed to give you a unique perspective on the time you might have remaining and how something like unnecessary worry can significantly impact it.</p>
-            <p>Based on average life expectancy data, we'll help you visualize your time in years, days, and hours, and show you the potential cost of spending that time worrying.</p>
-            <p>It's not about predicting the future, but about bringing attention to the present and inspiring you to use your precious moments wisely.</p>
-            <button onclick="nextStep('step-age')">Start Calculation</button>
-        </section>
-
-        <section id="step-age" class="step">
-            <h2>Step 1: How old are you?</h2>
-            <label for="age">Your current age:</label>
-            <input type="number" id="age" name="age" min="1" max="120" required>
-            <button onclick="nextStep('step-sex')">Next</button>
-        </section>
-
-        <section id="step-sex" class="step">
-            <h2>Step 2: What is your biological sex?</h2>
-            <p>(Needed for average life expectancy data)</p>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" id="sex-male" name="sex" value="SEX_MLE" required> Male
-                </label>
-                <label>
-                    <input type="radio" id="sex-female" name="sex" value="SEX_FMLE" required> Female
-                </label>
+    <div id="app-container">
+        
+        <!-- HERO / INTRO -->
+        <section id="step-intro" class="step step-fullscreen active" style="background-image: url('assets/hero_bg.png');">
+            <header class="top-nav">
+                <nav>
+                    <a href="#">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Resources</a>
+                    <a href="#">Contact</a>
+                </nav>
+            </header>
+            
+            <div class="intro-content">
+                <h1 class="hero-title">Discover Your Precious Time</h1>
+                <div class="intro-modal">
+                    <p>Time is our most valuable resource. This calculator helps you visualize how much time you truly have, and how daily worry might be consuming it.</p>
+                    <p>Begin your journey to mindful living.</p>
+                    <button class="btn-primary" onclick="nextStep('step-age')">Start Calculation</button>
+                </div>
             </div>
-            <button onclick="nextStep('step-country')">Next</button>
+            
+            <footer class="bottom-footer">
+                <p>Time is precious. Use it wisely.</p>
+                <p class="small">Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>.</p>
+            </footer>
         </section>
 
-        <section id="step-country" class="step">
-            <h2>Step 3: Where do you live?</h2>
-            <label for="country">Select your country:</label>
-            <select id="country" name="country" required>
-                <option value="" disabled selected>-- Select Country --</option>
-            </select>
-            <button onclick="nextStep('step-worry')">Next</button>
-        </section>
-
-        <section id="step-worry" class="step">
-            <h2>Step 4: Daily Worry Time</h2>
-            <label for="worry-hours">On average, how many hours per day do you spend worrying about things you can't control?</label>
-            <input type="range" id="worry-hours" name="worry-hours" min="0" max="12" step="0.5" value="1">
-            <span id="worry-output">1 hour</span>
-            <button onclick="calculateTime()">Calculate My Time</button> </section>
-
-        <section id="step-results" class="step">
-            <h2>Your Time Breakdown</h2>
-            <div id="results-loading" style="display: none;">Fetching data...</div>
-            <div id="results-summary">
-            </div>
-            <div id="motivational-quote">
-            </div>
-            <div class="result-actions">
-                <button id="reset-button" onclick="resetCalculator()">Start Over</button>
-                <button onclick="showNewQuote()">New Quote</button>
+        <!-- STEP 1: AGE (Split Screen) -->
+        <section id="step-age" class="step step-split">
+            <div class="split-left" style="background-image: url('assets/hourglass_split.png');"></div>
+            <div class="split-right">
+                <div class="form-container">
+                    <div class="progress-bar">
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                    </div>
+                    <p class="step-indicator">Step 1 of 4</p>
+                    
+                    <h2>Step 1: How old are you?</h2>
+                    <p class="subtitle">Enter your current age to begin.</p>
+                    
+                    <div class="input-wrapper">
+                        <input type="number" id="age" name="age" min="1" max="120" required value="25">
+                    </div>
+                    
+                    <button class="btn-continue" onclick="nextStep('step-sex')">Continue</button>
+                </div>
             </div>
         </section>
-    </main>
 
-    <footer>
-        <p>Time is precious. Use it wisely.</p>
-        <p style="font-size: 0.8em; margin-top: 0.5em;">Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank" style="color: #fff; text-decoration: underline;">ZenQuotes API</a>.</p>
-    </footer>
+        <!-- STEP 2: SEX (Split Screen) -->
+        <section id="step-sex" class="step step-split">
+            <div class="split-left" style="background-image: url('assets/hourglass_split.png');"></div>
+            <div class="split-right">
+                <div class="form-container">
+                    <div class="progress-bar">
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                    </div>
+                    <p class="step-indicator">Step 2 of 4</p>
+                    
+                    <h2>Step 2: Biological sex?</h2>
+                    <p class="subtitle">Needed for accurate life expectancy data.</p>
+                    
+                    <div class="radio-group-vertical">
+                        <label>
+                            <input type="radio" id="sex-male" name="sex" value="SEX_MLE" required> Male
+                        </label>
+                        <label>
+                            <input type="radio" id="sex-female" name="sex" value="SEX_FMLE" required> Female
+                        </label>
+                    </div>
+                    
+                    <button class="btn-continue" onclick="nextStep('step-country')">Continue</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3: COUNTRY (Split Screen) -->
+        <section id="step-country" class="step step-split">
+            <div class="split-left" style="background-image: url('assets/hourglass_split.png');"></div>
+            <div class="split-right">
+                <div class="form-container">
+                    <div class="progress-bar">
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment"></div>
+                    </div>
+                    <p class="step-indicator">Step 3 of 4</p>
+                    
+                    <h2>Step 3: Where do you live?</h2>
+                    <p class="subtitle">Select your country.</p>
+                    
+                    <div class="input-wrapper">
+                        <select id="country" name="country" required>
+                            <option value="" disabled selected>-- Select Country --</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-continue" onclick="nextStep('step-worry')">Continue</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 4: WORRY TIME (Split Screen) -->
+        <section id="step-worry" class="step step-split">
+            <div class="split-left" style="background-image: url('assets/hourglass_split.png');"></div>
+            <div class="split-right">
+                <div class="form-container">
+                    <div class="progress-bar">
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment active"></div>
+                        <div class="progress-segment active"></div>
+                    </div>
+                    <p class="step-indicator">Step 4 of 4</p>
+                    
+                    <h2>Step 4: Daily Worry Time</h2>
+                    <p class="subtitle">Hours per day spent worrying over uncontrollables.</p>
+                    
+                    <div class="slider-wrapper">
+                        <input type="range" id="worry-hours" name="worry-hours" min="0" max="12" step="0.5" value="1">
+                        <span id="worry-output" class="gold-text">1 hour</span>
+                    </div>
+                    
+                    <button class="btn-continue" onclick="calculateTime()">Calculate My Time</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTS PAGE (Centered specific layout) -->
+        <section id="step-results" class="step step-results">
+            <div class="results-container">
+                <p class="small-title">How Much Time Do You Truly Have?</p>
+                <div id="results-loading" style="display: none;">Fetching data...</div>
+                
+                <div id="results-summary">
+                    <!-- Injected by JS -->
+                </div>
+                
+                <div class="result-actions">
+                    <button id="reset-button" class="btn-outline" onclick="resetCalculator()">Start Over</button>
+                    <button class="btn-outline" onclick="showNewQuote()">New Quote</button>
+                </div>
+
+                <div id="motivational-quote"></div>
+            </div>
+        </section>
+        
+    </div>
 
     <script src="script.js" defer></script>
 </body>

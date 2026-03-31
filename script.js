@@ -460,66 +460,72 @@ async function calculateTime() {
         const approxWakingHoursRemaining = yearsRemaining * 365.25 * (24 - 8);
         const worryPercentage = approxWakingHoursRemaining > 0 ? (totalWorryHours / approxWakingHoursRemaining) * 100 : 0;
 
-        // --- Stage 6: Display Results (Updated to emphasize years) ---
-        // Determine display text for sex code
-        let sexDisplay = selectedSex; // Default
-        if (selectedSex === 'SEX_MLE') sexDisplay = 'Male';
-        if (selectedSex === 'SEX_FMLE') sexDisplay = 'Female';
-
+        // --- Stage 6: Display Results (Updated to match dark editorial UI) ---
         let resultsHTML = `
-            <p>According to the World Health Organization (WHO), the average life expectancy for ${selectedCountryName} (${sexDisplay}) is around <strong>${avgLifeExpectancy.toFixed(1)} years</strong>.</p>
-            <p>At age ${currentAge}, you have approximately:</p>
-            <div style="text-align: center; margin: 1.5em 0; padding: 1.5em; background: var(--bg-surface-hover); border: 1px solid var(--glass-border); border-radius: var(--border-radius);">
-                <span style="font-size: 2em; color: var(--primary-light);"><strong>${yearsRemaining.toFixed(1)} years</strong></span>
-                <br>
-                <span style="color: var(--text-secondary); font-size: 0.9em; margin-top: 0.5rem; display: inline-block;">
-                    (that's about ${totalDaysRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} days or 
-                    ${totalHoursRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} hours)
-                </span>
-            </div>
+            <h2 class="results-header">Your Time Breakdown Results</h2>
+            
+            <div class="results-hero-section">
+                <img src="assets/hourglass_results.png" class="results-image" alt="Hourglass">
+                <div class="results-data">
         `;
 
         if (yearsRemaining > 0) {
             resultsHTML += `
-                <hr style="border: 0; border-top: 1px dashed var(--glass-border); margin: 1.5em 0;">
-                <p>If you spend <strong>${dailyWorryHours} hours</strong> worrying each day, over your remaining time that adds up to:</p>
-                <div style="text-align: center; margin: 1.5em 0; padding: 1.5em; background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.2); border-radius: var(--border-radius);">
-                    <span style="font-size: 1.6em; color: #f87171;"><strong>${worryYears.toFixed(1)} years</strong> spent worrying</span>
-                    <br>
-                    <span style="color: var(--text-secondary); font-size: 0.9em; margin-top: 0.5rem; display: inline-block;">
-                        (approximately ${totalWorryDays.toLocaleString(undefined, {maximumFractionDigits: 0})} days or 
-                        ${totalWorryHours.toLocaleString(undefined, {maximumFractionDigits: 0})} hours)
-                    </span>
+                    <div class="data-row">
+                        <span class="icon-circle icon-gold">&#10005;</span>
+                        <span class="data-text-small"><strong>${worryYears.toFixed(1)} years</strong> spent worrying (${worryPercentage.toFixed(1)}%)</span>
+                    </div>
+                    
+                    <p class="data-main-number">${yearsRemaining.toFixed(1)} years</p>
+                    <p class="data-subtitle">Estimated remaining time at age ${currentAge}</p>
+                    
+                    <div class="data-row">
+                        <span class="icon-circle icon-green">&#10003;</span>
+                        <span class="data-text-small"><strong>${effectiveYearsRemaining.toFixed(1)} years</strong> worry-free time (${(100 - worryPercentage).toFixed(1)}%)</span>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; display: flex; height: 12px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);">
+                        <div style="width: ${worryPercentage}%; background: linear-gradient(90deg, var(--gold), #f87171);"></div>
+                        <div style="width: ${100 - worryPercentage}%; background: linear-gradient(90deg, #4ade80, #22c55e);"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #9ca3af; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">
+                        <span style="width: ${worryPercentage}%; text-align: left;">Worry Time</span>
+                        <span style="width: ${100 - worryPercentage}%; text-align: right;">Worry-Free Time</span>
+                    </div>
                 </div>
-                <p>That worry time represents <strong style="color: #f87171;">${worryPercentage.toFixed(1)}%</strong> of your potential remaining <em>waking</em> hours.</p>
-                <p>Your effective time remaining (after subtracting worry time) would be:</p>
-                <div style="text-align: center; margin: 1.5em 0; padding: 1.5em; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: var(--border-radius);">
-                    <span style="font-size: 1.8em; color: #4ade80;"><strong>${effectiveYearsRemaining.toFixed(1)} years</strong> of worry-free time</span>
-                    <br>
-                    <span style="color: var(--text-secondary); font-size: 0.9em; margin-top: 0.5rem; display: inline-block;">
-                        (about ${effectiveDaysRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} days or 
-                        ${effectiveHoursRemaining.toLocaleString(undefined, {maximumFractionDigits: 0})} hours)
-                    </span>
-                </div>
-            `;
+            </div>`;
 
-            // Add a practical perspective if worry time is significant
             if (worryYears >= 1) {
                 resultsHTML += `
-                    <div style="margin-top: 1.5em; padding: 1.5em; background: var(--bg-surface); border: 1px solid var(--glass-border); border-radius: var(--border-radius);">
-                        <p style="margin: 0; color: var(--primary-light);"><strong>💡 Perspective:</strong> In ${worryYears.toFixed(1)} years, you could:</p>
-                        <ul style="margin-top: 1em; color: var(--text-secondary); list-style-type: none; padding-left: 0;">
-                            <li style="margin-bottom: 0.5rem;">✦ Learn multiple languages</li>
-                            <li style="margin-bottom: 0.5rem;">✦ Complete a degree program</li>
-                            <li style="margin-bottom: 0.5rem;">✦ Master several new skills</li>
-                            <li>✦ Travel to dozens of countries</li>
-                        </ul>
+            <div class="perspective-section">
+                <h3 class="perspective-title">Perspective: What you could do in ${worryYears.toFixed(1)} years</h3>
+                <div class="perspective-cards">
+                    <div class="p-card">
+                        <div class="p-card-icon">📖</div>
+                        <div class="p-card-title">Learn a New Language</div>
+                        <div class="p-card-desc">Master French, Japanese, or any language you desire.</div>
                     </div>
-                `;
+                    <div class="p-card">
+                        <div class="p-card-icon">🌐</div>
+                        <div class="p-card-title">Travel the World</div>
+                        <div class="p-card-desc">Visit dozens of countries and experience new cultures.</div>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-icon">🖌️</div>
+                        <div class="p-card-title">Discover a Passion</div>
+                        <div class="p-card-desc">Write a novel, learn an instrument, or start a business.</div>
+                    </div>
+                </div>
+            </div>`;
             }
         } else {
-            resultsHTML += `<p>According to averages, you've reached or surpassed the average life expectancy for your selection. Every day is a bonus!</p>`;
+            resultsHTML += `
+                    <p class="data-main-number">Bonus Time</p>
+                    <p class="data-subtitle">According to averages, you've reached or surpassed the life expectancy. Every day is a bonus!</p>
+                </div>
+            </div>`;
         }
+
         resultsSummaryDiv.innerHTML = resultsHTML;
 
         // --- Stage 7: Display Quote ---
